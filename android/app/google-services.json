@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "260190089217",
+    "project_id": "estateease",
+    "storage_bucket": "estateease.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260190089217:android:0db76442229a955bd59000",
+        "android_client_info": {
+          "package_name": "com.example.estateease"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260190089217-hm5on42gpub4n0qmgpq2195tn6fk4nb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzn7u0cX98zQwRUep1bQg10M1GNNig_e8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260190089217-hm5on42gpub4n0qmgpq2195tn6fk4nb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
