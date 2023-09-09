@@ -32,7 +32,7 @@ const Gradient kLinearGradientBlue = LinearGradient(
   begin: Alignment.topCenter,
   end: Alignment.bottomCenter,
   colors: <Color>[
-    kLightBlue,
+    kBlue,
     kBlue,
   ],
   tileMode: TileMode.clamp,

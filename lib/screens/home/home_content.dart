@@ -33,51 +33,51 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: kPadding20,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Location',
-                          style: kRalewayRegular.copyWith(
-                            color: kGrey83,
-                            fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
-                          ),
-                        ),
-                        SizedBox(
-                          height: SizeConfig.blockSizeVertical! * 0.5,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'Surat',
-                              style: kRalewayMedium.copyWith(
-                                color: kBlack,
-                                fontSize: SizeConfig.blockSizeHorizontal! * 5,
-                              ),
-                            ),
-                            SizedBox(
-                              width: SizeConfig.blockSizeHorizontal! * 0.5,
-                            ),
-                            SvgPicture.asset(
-                              'assets/icons/icon_dropdown.svg',
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                    SvgPicture.asset(
-                      'assets/icons/icon_notification_has_notif.svg',
-                    ),
-                  ],
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(
+              //     horizontal: kPadding20,
+              //   ),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(
+              //             'Location',
+              //             style: kRalewayRegular.copyWith(
+              //               color: kGrey83,
+              //               fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
+              //             ),
+              //           ),
+              //           SizedBox(
+              //             height: SizeConfig.blockSizeVertical! * 0.5,
+              //           ),
+              //           Row(
+              //             children: [
+              //               Text(
+              //                 'Surat',
+              //                 style: kRalewayMedium.copyWith(
+              //                   color: kBlack,
+              //                   fontSize: SizeConfig.blockSizeHorizontal! * 5,
+              //                 ),
+              //               ),
+              //               SizedBox(
+              //                 width: SizeConfig.blockSizeHorizontal! * 0.5,
+              //               ),
+              //               SvgPicture.asset(
+              //                 'assets/icons/icon_dropdown.svg',
+              //               ),
+              //             ],
+              //           )
+              //         ],
+              //       ),
+              //       SvgPicture.asset(
+              //         'assets/icons/icon_notification_has_notif.svg',
+              //       ),
+              //     ],
+              //   ),
+              // ),
               const SizedBox(
                 height: kPadding24,
               ),

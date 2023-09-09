@@ -8,7 +8,6 @@ class RentProperty{
       address
       bedroom
       bathroom
-      hall
       balcony
       User
         userImage
@@ -19,6 +18,5 @@ class RentProperty{
       main image
       extra images
       location 
-
    */
 }

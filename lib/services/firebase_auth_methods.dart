@@ -1,5 +1,5 @@
-import 'package:estateease/screens/home_screen.dart';
-import 'package:estateease/screens/registration.dart';
+import 'package:estateease/screens/auth/registration.dart';
+import 'package:estateease/screens/home/home_content.dart';
 import 'package:estateease/utils/showSnackBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +68,7 @@ class FirebaseAuthMethods {
         EasyLoading.dismiss();
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Home()),
+          MaterialPageRoute(builder: (context) => HomePage()),
         );
       } else {
         EasyLoading.dismiss();
@@ -123,7 +123,7 @@ class FirebaseAuthMethods {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const Home(),
+              builder: (context) => const HomePage(),
             ),
           );
         }

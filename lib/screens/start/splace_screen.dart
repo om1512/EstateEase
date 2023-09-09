@@ -1,8 +1,6 @@
 import 'dart:async';
-
-import 'package:estateease/screens/authentication.dart';
+import 'package:estateease/screens/auth/authentication.dart';
 import 'package:estateease/screens/home/home_content.dart';
-import 'package:estateease/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +32,7 @@ class _SplaceScreenState extends State<SplaceScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const Home(),
+              builder: (context) => const HomePage(),
             ),
           );
         });
