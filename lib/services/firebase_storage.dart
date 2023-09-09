@@ -31,7 +31,7 @@ class Storage extends StatelessWidget {
       uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
         switch (taskSnapshot.state) {
           case TaskState.running:
-            EasyLoading.show(status: "Uploading");
+            EasyLoading.show(status: "Uploading Image");
             break;
           case TaskState.paused:
             EasyLoading.showError("Something Went Wrong");
@@ -46,7 +46,8 @@ class Storage extends StatelessWidget {
             var dowurl =
                 await storageRef.child('Users/$fileId').getDownloadURL();
             url = dowurl.toString();
-            EasyLoading.showSuccess("Uploaded");
+            EasyLoading.showSuccess("Image Uploaded");
+
             break;
         }
       });

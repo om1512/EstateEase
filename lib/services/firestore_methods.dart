@@ -1,19 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estateease/screens/home/home_content.dart';
+import 'package:estateease/services/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:estateease/models/Users.dart' as MyUser;
 
 class FireStoreMethods {
+  String downloadURL = "";
+  Storage storage = Storage();
   Future<String?> addUser({
     required BuildContext context,
     required String userID,
-    required Map<String, dynamic> user,
+    required String image,
+    required String eMail,
+    required String phone,
+    required String name,
   }) async {
     try {
-      EasyLoading.show(status: "Uploading");
+      downloadURL = await storage.uploadSingleFile(context, userID, image);
+      EasyLoading.show(status: "Uploading data");
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');
-      await users.doc(userID).set(user, SetOptions(merge: true));
+      MyUser.User u = MyUser.User(
+          image: downloadURL, email: eMail, phone: phone, name: name);
+      await users.doc(userID).set(u.toJson(), SetOptions(merge: true));
       EasyLoading.showSuccess("Uploaded");
       Navigator.pushReplacement(
         context,
@@ -24,7 +34,7 @@ class FireStoreMethods {
       return 'success';
     } on FirebaseException catch (e) {
       EasyLoading.dismiss();
-      return 'Error adding user $e'; 
+      return 'Error adding user $e';
     }
   }
 

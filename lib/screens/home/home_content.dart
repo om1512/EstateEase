@@ -374,163 +374,155 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
-              // const SizedBox(
-              //   height: kPadding24,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(
-              //     horizontal: kPadding20,
-              //   ),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Text(
-              //         'Best for you',
-              //         style: kRalewayMedium.copyWith(
-              //           color: kBlack,
-              //           fontSize: SizeConfig.blockSizeHorizontal! * 4,
-              //         ),
-              //       ),
-              //       Text(
-              //         'See more',
-              //         style: kRalewayRegular.copyWith(
-              //           color: kGrey85,
-              //           fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: kPadding24,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(
-              //     horizontal: kPadding20,
-              //   ),
-              //   child: ListView.builder(
-              //     shrinkWrap: true,
-              //     physics: const NeverScrollableScrollPhysics(),
-              //     itemCount: 8,
-              //     itemBuilder: (context, index) {
-              //       return Container(
-              //         height: 70,
-              //         margin: const EdgeInsets.only(
-              //           bottom: kPadding24,
-              //         ),
-              //         child: Row(
-              //           children: [
-              //             Container(
-              //               height: 70,
-              //               width: 70,
-              //               decoration: BoxDecoration(
-              //                 borderRadius:
-              //                     BorderRadius.circular(kBorderRadius10),
-              //                 boxShadow: [
-              //                   BoxShadow(
-              //                     spreadRadius: 0,
-              //                     offset: const Offset(0, 18),
-              //                     blurRadius: 18,
-              //                     color: kBlack.withOpacity(0.1),
-              //                   )
-              //                 ],
-              //                 image: const DecorationImage(
-              //                   fit: BoxFit.cover,
-              //                   image: NetworkImage(
-              //                     'https://mod-movers.com/wp-content/uploads/2020/06/webaliser-_TPTXZd9mOo-unsplash-scaled-e1591134904605.jpg',
-              //                   ),
-              //                 ),
-              //               ),
-              //             ),
-              //             SizedBox(
-              //               width: SizeConfig.blockSizeHorizontal! * 4.5,
-              //             ),
-              //             Expanded(
-              //               child: Column(
-              //                 crossAxisAlignment: CrossAxisAlignment.start,
-              //                 mainAxisAlignment: MainAxisAlignment.start,
-              //                 children: [
-              //                   Text(
-              //                     'Orchad House',
-              //                     style: kRalewayMedium.copyWith(
-              //                       color: kBlack,
-              //                       fontSize:
-              //                           SizeConfig.blockSizeHorizontal! * 4,
-              //                     ),
-              //                   ),
-              //                   SizedBox(
-              //                     height: SizeConfig.blockSizeVertical! * 0.5,
-              //                   ),
-              //                   Text(
-              //                     'Rp. 2.500.000.000 / Year',
-              //                     style: kRalewayRegular.copyWith(
-              //                       color: kBlue,
-              //                       fontSize:
-              //                           SizeConfig.blockSizeHorizontal! * 2.5,
-              //                     ),
-              //                   ),
-              //                   Expanded(
-              //                     child: Row(
-              //                       children: [
-              //                         Row(
-              //                           children: [
-              //                             SvgPicture.asset(
-              //                               'assets/icons/icon_bedroom.svg',
-              //                             ),
-              //                             SizedBox(
-              //                               width: SizeConfig
-              //                                       .blockSizeHorizontal! *
-              //                                   0.5,
-              //                             ),
-              //                             Text(
-              //                               '6 Bedroom',
-              //                               style: kRalewayRegular.copyWith(
-              //                                 color: kGrey85,
-              //                                 fontSize: SizeConfig
-              //                                         .blockSizeHorizontal! *
-              //                                     2.5,
-              //                               ),
-              //                             ),
-              //                           ],
-              //                         ),
-              //                         SizedBox(
-              //                           width:
-              //                               SizeConfig.blockSizeHorizontal! * 1,
-              //                         ),
-              //                         Row(
-              //                           children: [
-              //                             SvgPicture.asset(
-              //                               'assets/icons/icon_bathroom.svg',
-              //                             ),
-              //                             SizedBox(
-              //                               width: SizeConfig
-              //                                       .blockSizeHorizontal! *
-              //                                   0.5,
-              //                             ),
-              //                             Text(
-              //                               '4 Bathroom',
-              //                               style: kRalewayRegular.copyWith(
-              //                                 color: kGrey85,
-              //                                 fontSize: SizeConfig
-              //                                         .blockSizeHorizontal! *
-              //                                     2.5,
-              //                               ),
-              //                             ),
-              //                           ],
-              //                         ),
-              //                       ],
-              //                     ),
-              //                   ),
-              //                 ],
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // )
-              
+              const SizedBox(
+                height: kPadding24,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: kPadding20,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Best for you',
+                      style: kRalewayMedium.copyWith(
+                        color: kBlack,
+                        fontSize: SizeConfig.blockSizeHorizontal! * 4,
+                      ),
+                    ),
+                    Text(
+                      'See more',
+                      style: kRalewayRegular.copyWith(
+                        color: kGrey85,
+                        fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: kPadding24,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: kPadding20,
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: 8,
+                  itemBuilder: (context, index) {
+                    return Container(
+                        height: 70,
+                        margin: const EdgeInsets.only(
+                          bottom: kPadding24,
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 70,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(kBorderRadius10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    spreadRadius: 0,
+                                    offset: const Offset(0, 18),
+                                    blurRadius: 18,
+                                    color: kBlack.withOpacity(0.1),
+                                  ),
+                                ],
+                                image: const DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                      'https://mod-movers.com/wp-content/uploads/2020/06/webaliser-_TPTXZd9mOo-unsplash-scaled-e1591134904605.jpg'),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.blockSizeHorizontal! * 4.5,
+                            ),
+                            Expanded(
+                                child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Moorey House',
+                                  style: kRalewayMedium.copyWith(
+                                    color: kBlack,
+                                    fontSize:
+                                        SizeConfig.blockSizeHorizontal! * 4,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: SizeConfig.blockSizeVertical! * 0.5,
+                                ),
+                                Text(
+                                  'Rp. 2.500.000 / Year',
+                                  style: kRalewayMedium.copyWith(
+                                    color: kBlue,
+                                    fontSize:
+                                        SizeConfig.blockSizeHorizontal! * 2.5,
+                                  ),
+                                ),
+                                Expanded(
+                                    child: Row(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                            'assets/icons/icon_bedroom.svg'),
+                                        SizedBox(
+                                          width:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  0.5,
+                                        ),
+                                        Text(
+                                          '6 Bedroom',
+                                          style: kRalewayMedium.copyWith(
+                                            color: kGrey85,
+                                            fontSize: SizeConfig
+                                                    .blockSizeHorizontal! *
+                                                2.5,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      width:
+                                          SizeConfig.blockSizeHorizontal! * 1,
+                                    ),
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                            'assets/icons/icon_bathroom.svg'),
+                                        SizedBox(
+                                          width:
+                                              SizeConfig.blockSizeHorizontal! *
+                                                  0.5,
+                                        ),
+                                        Text(
+                                          '4 Bathroom',
+                                          style: kRalewayMedium.copyWith(
+                                            color: kGrey85,
+                                            fontSize: SizeConfig
+                                                    .blockSizeHorizontal! *
+                                                2.5,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ))
+                              ],
+                            ))
+                          ],
+                        ));
+                  },
+                ),
+              )
             ],
           ),
         ),

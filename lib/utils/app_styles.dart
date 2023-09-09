@@ -15,10 +15,8 @@ const Color kGrey8E = Color(0xff8E8E8E);
 const Color kGrey83 = Color(0xff838383);
 const Color kGrey85 = Color(0xff858585);
 
-const Color kBlue = Color(0xff0A8ED9);
-const Color kLightBlue = Color(0xffA0DAFB);
-
-
+const Color kBlue = Color.fromARGB(255, 16, 56, 93);
+const Color kLightBlue = Color.fromARGB(255, 183, 210, 237);
 
 Gradient kLinearGradientBlack = LinearGradient(
   begin: Alignment.bottomCenter,
@@ -50,12 +48,9 @@ Gradient kLinearGradientWhite = LinearGradient(
   tileMode: TileMode.clamp,
 );
 
-
-
 const double kBorderRadius20 = 20.0;
 const double kBorderRadius10 = 10.0;
 const double kBorderRadius5 = 5.0;
-
 
 const double kPadding32 = 32.0;
 const double kPadding24 = 24.0;
@@ -64,17 +59,12 @@ const double kPadding16 = 16.0;
 const double kPadding8 = 8.0;
 const double kPadding4 = 4.0;
 
-
-
 final kInputBorder = OutlineInputBorder(
   borderRadius: BorderRadius.circular(kBorderRadius10),
   borderSide: const BorderSide(
     color: kWhite,
   ),
 );
-
-
-
 
 final kRalewayBold = GoogleFonts.raleway(
   fontWeight: FontWeight.w700,
@@ -91,5 +81,3 @@ final kRalewayMedium = GoogleFonts.raleway(
 final kRalewayRegular = GoogleFonts.raleway(
   fontWeight: FontWeight.w400,
 );
-
-

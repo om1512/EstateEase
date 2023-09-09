@@ -40,7 +40,7 @@ void main() async {
     MaterialApp(
       theme: theme,
       debugShowCheckedModeBanner: false,
-      home: const SplaceScreen(),
+      home: const Home(),
       builder: EasyLoading.init(),
     ),
   );

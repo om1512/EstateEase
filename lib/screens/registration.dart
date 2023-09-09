@@ -576,22 +576,18 @@ class _RegistrationState extends State<Registration> {
 
   void saveData() async {
     if (isPhoneVerified) {
-      downloadURL =
-          await storage.uploadSingleFile(context, user!.uid, selectedImagePath);
-      if (downloadURL.isNotEmpty &&
+      showSnackBar(context, 'Clicked');
+      if (selectedImagePath.isNotEmpty &&
           nameController.text.isNotEmpty &&
           eMail != null &&
           phone != null) {
-        MyUser.User u = MyUser.User(
-            image: downloadURL,
-            email: eMail!,
-            phone: phone!,
-            name: nameController.text);
         await fireStoreMethods.addUser(
-          context: context,
-          userID: user!.uid,
-          user: u.toJson(),
-        );
+            context: context,
+            userID: user!.uid,
+            image: selectedImagePath,
+            name: nameController.text,
+            eMail: eMail!,
+            phone: phone!);
       } else {
         showSnackBar(context, "Please fill all the details");
       }
