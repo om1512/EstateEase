@@ -1,3 +1,4 @@
+import 'package:estateease/models/RentProperty.dart';
 import 'package:flutter/material.dart';
 import 'package:estateease/utils/app_styles.dart';
 import 'package:estateease/utils/size_config.dart';
@@ -5,8 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:readmore/readmore.dart';
 
 class PropertyDetail extends StatelessWidget {
-  const PropertyDetail({Key? key}) : super(key: key);
-
+  const PropertyDetail({Key? key, required this.property}) : super(key: key);
+  final RentProperty property;
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -40,7 +41,7 @@ class PropertyDetail extends StatelessWidget {
                     height: SizeConfig.blockSizeVertical! * 0.5,
                   ),
                   Text(
-                    'Rp. 2.500.000.000 / Year',
+                    '${property.price} / ${property.per}',
                     style: kRalewayMedium.copyWith(
                       color: kBlack,
                       fontSize: SizeConfig.blockSizeHorizontal! * 4,
@@ -99,10 +100,10 @@ class PropertyDetail extends StatelessWidget {
                       color: kBlack.withOpacity(0.1),
                     )
                   ],
-                  image: const DecorationImage(
+                  image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(
-                      'https://mod-movers.com/wp-content/uploads/2020/06/webaliser-_TPTXZd9mOo-unsplash-scaled-e1591134904605.jpg',
+                      property.thumbnail,
                     ),
                   ),
                 ),
@@ -150,7 +151,7 @@ class PropertyDetail extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Dreamsville House',
+                                property.name,
                                 style: kRalewaySemibold.copyWith(
                                   color: kWhite,
                                   fontSize:
@@ -161,7 +162,7 @@ class PropertyDetail extends StatelessWidget {
                                 height: SizeConfig.blockSizeVertical! * 0.5,
                               ),
                               Text(
-                                'Jl. Sultan Iskandar Muda, Jakarta selatan',
+                                property.address,
                                 style: kRalewayRegular.copyWith(
                                   color: kWhite,
                                   fontSize: SizeConfig.blockSizeHorizontal! * 3,
@@ -196,7 +197,7 @@ class PropertyDetail extends StatelessWidget {
                                             2.5,
                                       ),
                                       Text(
-                                        '6 Bedroom',
+                                        '${property.bedroom} Bedroom',
                                         style: kRalewayRegular.copyWith(
                                           color: kWhite,
                                           fontSize:
@@ -234,7 +235,7 @@ class PropertyDetail extends StatelessWidget {
                                             2.5,
                                       ),
                                       Text(
-                                        '4 Bathroom',
+                                        '${property.bathroom} Bathroom',
                                         style: kRalewayRegular.copyWith(
                                           color: kWhite,
                                           fontSize:
@@ -272,7 +273,7 @@ class PropertyDetail extends StatelessWidget {
                 height: kPadding24,
               ),
               ReadMoreText(
-                'The 3 level house that has a modern design, has a large pool and a garage that fits up to four cars The 3 level house that has a modern design, has a large pool and a garage that fits up to four cars',
+                property.description,
                 trimLines: 2,
                 trimMode: TrimMode.Line,
                 delimiter: '...',
@@ -299,10 +300,10 @@ class PropertyDetail extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 20,
                         backgroundImage: NetworkImage(
-                          'https://blogger.googleusercontent.com/img/a/AVvXsEiRB_dB-wXqJdvt26dkR-vqOXUjacfxAQIgFNMHl_czjMNDOh6VZVc-muCczDKZh-VU0JqUYV1M9h25ZooLGqhVfwexQO6zNY1jxeMDu0-SpfEPe8xkF7re1eldAkKld9Ct1YzesFmHpQK9wlPK330AXA85gsmDBURTQm3i7r08g6vO7KNtAPyDgeUIaQ=s740',
+                          property.user.image,
                         ),
                         backgroundColor: kBlue,
                       ),
@@ -313,7 +314,7 @@ class PropertyDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Abdul Aziz Ahwan',
+                            property.user.name,
                             style: kRalewayMedium.copyWith(
                               color: kBlack,
                               fontSize: SizeConfig.blockSizeHorizontal! * 4,
@@ -396,10 +397,10 @@ class PropertyDetail extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(kBorderRadius10),
                       color: kBlue,
-                      image: const DecorationImage(
+                      image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                          'https://mod-movers.com/wp-content/uploads/2020/06/webaliser-_TPTXZd9mOo-unsplash-scaled-e1591134904605.jpg',
+                          property.images[index],
                         ),
                       ),
                     ),
@@ -411,7 +412,7 @@ class PropertyDetail extends StatelessWidget {
                       child: Center(
                         child: index == 4 - 1
                             ? Text(
-                                '+5',
+                                '+${property.images.length - 3}',
                                 style: kRalewayMedium.copyWith(
                                   color: kWhite,
                                   fontSize: SizeConfig.blockSizeHorizontal! * 5,
@@ -461,12 +462,6 @@ class PropertyDetail extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-
-    return Scaffold(
-      body: Center(
-        child: Text(''),
       ),
     );
   }

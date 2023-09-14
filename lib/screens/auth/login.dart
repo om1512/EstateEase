@@ -1,9 +1,12 @@
+import 'package:estateease/screens/auth/authentication_email.dart';
+import 'package:estateease/screens/auth/registration.dart';
 import 'package:estateease/services/firebase_auth_methods.dart';
-import 'package:estateease/widgets/authentication_email.dart';
+import 'package:estateease/utils/app_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 
 class Authentication extends StatefulWidget {
   const Authentication({super.key});
@@ -70,7 +73,7 @@ class _AuthenticationState extends State<Authentication>
                                 width: 5,
                               ),
                               Text(
-                                "EstateEase",
+                                " EstateEase",
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium!
@@ -157,7 +160,7 @@ class _AuthenticationState extends State<Authentication>
                         ),
                       ),
                       label: Text(
-                        "Authenticate with Google",
+                        "Continue with Google",
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium!
@@ -167,6 +170,29 @@ class _AuthenticationState extends State<Authentication>
                                     Theme.of(context).colorScheme.background),
                       ),
                     ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Registration(),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Don\'t Have an Account ! '),
+                      Text(
+                        'Sign UP',
+                        style: kRalewayBold.copyWith(color: kBlue),
+                      ),
+                    ],
                   ),
                 ),
               ],

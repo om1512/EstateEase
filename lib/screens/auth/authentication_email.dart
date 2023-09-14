@@ -14,14 +14,6 @@ class _AuthenticationEmailState extends State<AuthenticationEmail> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void signUpUser() async {
-    FirebaseAuthMethods(FirebaseAuth.instance).signUpWithEmail(
-      email: emailController.text,
-      password: passwordController.text,
-      context: context,
-    );
-  }
-
   void signInUser() async {
     FirebaseAuthMethods(FirebaseAuth.instance).signInWithEmail(
       email: emailController.text,
@@ -160,7 +152,7 @@ class _AuthenticationEmailState extends State<AuthenticationEmail> {
                       width: 8,
                     ),
                     Text(
-                        "If you come for the first still you can verify your credentials",
+                        "If you come for the first than please sign up with credentials",
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             fontSize: 10,
                             color: const Color.fromARGB(255, 175, 175, 175))),

@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estateease/utils/showSnackBar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -10,7 +12,7 @@ class Storage extends StatelessWidget {
   Storage({super.key});
 
   final FirebaseStorage storage = FirebaseStorage.instance;
-
+  FirebaseAuth auth = FirebaseAuth.instance;
   String url = "";
 
   Future<String> uploadSingleFile(
@@ -47,6 +49,11 @@ class Storage extends StatelessWidget {
                 await storageRef.child('Users/$fileId').getDownloadURL();
             url = dowurl.toString();
             EasyLoading.showSuccess("Image Uploaded");
+            print(url);
+            FirebaseFirestore.instance
+                .collection('Users')
+                .doc(auth.currentUser!.uid)
+                .update({'image': url});
 
             break;
         }

@@ -1,3 +1,6 @@
+import 'package:estateease/models/PropertyLocation.dart';
+import 'package:estateease/models/RentProperty.dart';
+import 'package:estateease/models/Users.dart';
 import 'package:flutter/material.dart';
 import 'package:estateease/utils/app_styles.dart';
 import 'package:estateease/utils/size_config.dart';
@@ -21,6 +24,240 @@ class _HomePageState extends State<HomePage> {
     // pg and hostels
   ];
 
+  List<RentProperty> list = [
+    RentProperty(
+      name: "Dreamvilla House",
+      description:
+          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
+      address: "400 RingRoad, Opp. DMart",
+      bedroom: "5",
+      bathroom: "6",
+      balcony: "3",
+      price: "10,000",
+      per: "month",
+      thumbnail:
+          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      images: [
+        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ],
+      location: PropertyLocation(
+          streetAddress: "99971 Stoltenberg Motorway",
+          city: "Surat",
+          state: "Gujrat",
+          postalZip: "394199",
+          country: "India",
+          latitude: "10.264",
+          longitude: "120.040"),
+      user: User(
+          image:
+              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
+          name: "Jake Benjamin",
+          phone: "+91 9895552525",
+          email: "agent@gmail.com"),
+    ),
+    RentProperty(
+      name: "Dreamvilla House",
+      description:
+          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
+      address: "400 RingRoad, Opp. DMart",
+      bedroom: "5",
+      bathroom: "6",
+      balcony: "3",
+      price: "10,000",
+      per: "month",
+      thumbnail:
+          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      images: [
+        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ],
+      location: PropertyLocation(
+          streetAddress: "99971 Stoltenberg Motorway",
+          city: "Surat",
+          state: "Gujrat",
+          postalZip: "394199",
+          country: "India",
+          latitude: "10.264",
+          longitude: "120.040"),
+      user: User(
+          image:
+              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
+          name: "Jake Benjamin",
+          phone: "+91 9895552525",
+          email: "agent@gmail.com"),
+    ),
+    RentProperty(
+      name: "Dreamvilla House",
+      description:
+          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
+      address: "400 RingRoad, Opp. DMart",
+      bedroom: "5",
+      bathroom: "6",
+      balcony: "3",
+      price: "10,000",
+      per: "month",
+      thumbnail:
+          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      images: [
+        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ],
+      location: PropertyLocation(
+          streetAddress: "99971 Stoltenberg Motorway",
+          city: "Surat",
+          state: "Gujrat",
+          postalZip: "394199",
+          country: "India",
+          latitude: "10.264",
+          longitude: "120.040"),
+      user: User(
+          image:
+              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
+          name: "Jake Benjamin",
+          phone: "+91 9895552525",
+          email: "agent@gmail.com"),
+    ),
+    RentProperty(
+      name: "Dreamvilla House",
+      description:
+          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
+      address: "400 RingRoad, Opp. DMart",
+      bedroom: "5",
+      bathroom: "6",
+      balcony: "3",
+      price: "10,000",
+      per: "month",
+      thumbnail:
+          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      images: [
+        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ],
+      location: PropertyLocation(
+          streetAddress: "99971 Stoltenberg Motorway",
+          city: "Surat",
+          state: "Gujrat",
+          postalZip: "394199",
+          country: "India",
+          latitude: "10.264",
+          longitude: "120.040"),
+      user: User(
+          image:
+              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
+          name: "Jake Benjamin",
+          phone: "+91 9895552525",
+          email: "agent@gmail.com"),
+    ),
+    RentProperty(
+      name: "Dreamvilla House",
+      description:
+          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
+      address: "400 RingRoad, Opp. DMart",
+      bedroom: "5",
+      bathroom: "6",
+      balcony: "3",
+      price: "10,000",
+      per: "month",
+      thumbnail:
+          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      images: [
+        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ],
+      location: PropertyLocation(
+          streetAddress: "99971 Stoltenberg Motorway",
+          city: "Surat",
+          state: "Gujrat",
+          postalZip: "394199",
+          country: "India",
+          latitude: "10.264",
+          longitude: "120.040"),
+      user: User(
+          image:
+              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
+          name: "Jake Benjamin",
+          phone: "+91 9895552525",
+          email: "agent@gmail.com"),
+    ),
+    RentProperty(
+      name: "Dreamvilla House",
+      description:
+          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
+      address: "400 RingRoad, Opp. DMart",
+      bedroom: "5",
+      bathroom: "6",
+      balcony: "3",
+      price: "10,000",
+      per: "month",
+      thumbnail:
+          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      images: [
+        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ],
+      location: PropertyLocation(
+          streetAddress: "99971 Stoltenberg Motorway",
+          city: "Surat",
+          state: "Gujrat",
+          postalZip: "394199",
+          country: "India",
+          latitude: "10.264",
+          longitude: "120.040"),
+      user: User(
+          image:
+              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
+          name: "Jake Benjamin",
+          phone: "+91 9895552525",
+          email: "agent@gmail.com"),
+    ),
+    RentProperty(
+      name: "Dreamvilla House",
+      description:
+          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
+      address: "400 RingRoad, Opp. DMart",
+      bedroom: "5",
+      bathroom: "6",
+      balcony: "3",
+      price: "10,000",
+      per: "month",
+      thumbnail:
+          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      images: [
+        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
+        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
+      ],
+      location: PropertyLocation(
+          streetAddress: "99971 Stoltenberg Motorway",
+          city: "Surat",
+          state: "Gujrat",
+          postalZip: "394199",
+          country: "India",
+          latitude: "10.264",
+          longitude: "120.040"),
+      user: User(
+          image:
+              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
+          name: "Jake Benjamin",
+          phone: "+91 9895552525",
+          email: "agent@gmail.com"),
+    ),
+  ];
+
   int current = 0;
 
   @override
@@ -33,51 +270,6 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(top: 10),
           child: Column(
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(
-              //     horizontal: kPadding20,
-              //   ),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       Column(
-              //         crossAxisAlignment: CrossAxisAlignment.start,
-              //         children: [
-              //           Text(
-              //             'Location',
-              //             style: kRalewayRegular.copyWith(
-              //               color: kGrey83,
-              //               fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
-              //             ),
-              //           ),
-              //           SizedBox(
-              //             height: SizeConfig.blockSizeVertical! * 0.5,
-              //           ),
-              //           Row(
-              //             children: [
-              //               Text(
-              //                 'Surat',
-              //                 style: kRalewayMedium.copyWith(
-              //                   color: kBlack,
-              //                   fontSize: SizeConfig.blockSizeHorizontal! * 5,
-              //                 ),
-              //               ),
-              //               SizedBox(
-              //                 width: SizeConfig.blockSizeHorizontal! * 0.5,
-              //               ),
-              //               SvgPicture.asset(
-              //                 'assets/icons/icon_dropdown.svg',
-              //               ),
-              //             ],
-              //           )
-              //         ],
-              //       ),
-              //       SvgPicture.asset(
-              //         'assets/icons/icon_notification_has_notif.svg',
-              //       ),
-              //     ],
-              //   ),
-              // ),
               const SizedBox(
                 height: kPadding24,
               ),
@@ -232,13 +424,14 @@ class _HomePageState extends State<HomePage> {
                 height: 272,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 5,
+                  itemCount: list.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: (() => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const PropertyDetail(),
+                              builder: (context) =>
+                                  PropertyDetail(property: list[index]),
                             ),
                           )),
                       child: Container(
@@ -246,7 +439,7 @@ class _HomePageState extends State<HomePage> {
                         width: 222,
                         margin: EdgeInsets.only(
                           left: kPadding20,
-                          right: index == 5 - 1 ? kPadding20 : 0,
+                          right: index == list.length - 1 ? kPadding20 : 0,
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(
@@ -260,11 +453,9 @@ class _HomePageState extends State<HomePage> {
                               color: kBlack.withOpacity(0.1),
                             )
                           ],
-                          image: const DecorationImage(
+                          image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(
-                              'https://mod-movers.com/wp-content/uploads/2020/06/webaliser-_TPTXZd9mOo-unsplash-scaled-e1591134904605.jpg',
-                            ),
+                            image: NetworkImage(list[index].thumbnail),
                           ),
                         ),
                         child: Stack(
@@ -339,7 +530,7 @@ class _HomePageState extends State<HomePage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Dreamsville House',
+                                          list[index].name,
                                           style: kRalewayMedium.copyWith(
                                             color: kWhite,
                                             fontSize: SizeConfig
@@ -353,7 +544,7 @@ class _HomePageState extends State<HomePage> {
                                                   0.5,
                                         ),
                                         Text(
-                                          '129, Vesu Highway Road',
+                                          list[index].address,
                                           style: kRalewayRegular.copyWith(
                                             color: kWhite,
                                             fontSize: SizeConfig
@@ -405,121 +596,117 @@ class _HomePageState extends State<HomePage> {
                 height: kPadding24,
               ),
               Padding(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   horizontal: kPadding20,
                 ),
                 child: ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 8,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: list.length,
                   itemBuilder: (context, index) {
                     return Container(
-                        height: 70,
-                        margin: const EdgeInsets.only(
-                          bottom: kPadding24,
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 70,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(kBorderRadius10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    spreadRadius: 0,
-                                    offset: const Offset(0, 18),
-                                    blurRadius: 18,
-                                    color: kBlack.withOpacity(0.1),
-                                  ),
-                                ],
-                                image: const DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      'https://mod-movers.com/wp-content/uploads/2020/06/webaliser-_TPTXZd9mOo-unsplash-scaled-e1591134904605.jpg'),
+                      height: 70,
+                      margin: const EdgeInsets.only(
+                        bottom: kPadding24,
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 70,
+                            width: 70,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.circular(kBorderRadius10),
+                              boxShadow: [
+                                BoxShadow(
+                                  spreadRadius: 0,
+                                  offset: const Offset(0, 18),
+                                  blurRadius: 18,
+                                  color: kBlack.withOpacity(0.1),
                                 ),
+                              ],
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(list[index].thumbnail),
                               ),
                             ),
-                            SizedBox(
-                              width: SizeConfig.blockSizeHorizontal! * 4.5,
-                            ),
-                            Expanded(
-                                child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Moorey House',
-                                  style: kRalewayMedium.copyWith(
-                                    color: kBlack,
-                                    fontSize:
-                                        SizeConfig.blockSizeHorizontal! * 4,
-                                  ),
+                          ),
+                          SizedBox(
+                            width: SizeConfig.blockSizeHorizontal! * 4.5,
+                          ),
+                          Expanded(
+                              child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                list[index].name,
+                                style: kRalewayMedium.copyWith(
+                                  color: kBlack,
+                                  fontSize: SizeConfig.blockSizeHorizontal! * 4,
                                 ),
-                                SizedBox(
-                                  height: SizeConfig.blockSizeVertical! * 0.5,
+                              ),
+                              SizedBox(
+                                height: SizeConfig.blockSizeVertical! * 0.5,
+                              ),
+                              Text(
+                                '${list[index].price} / ${list[index].per}',
+                                style: kRalewayMedium.copyWith(
+                                  color: kBlue,
+                                  fontSize:
+                                      SizeConfig.blockSizeHorizontal! * 2.5,
                                 ),
-                                Text(
-                                  'Rp. 2.500.000 / Year',
-                                  style: kRalewayMedium.copyWith(
-                                    color: kBlue,
-                                    fontSize:
-                                        SizeConfig.blockSizeHorizontal! * 2.5,
-                                  ),
-                                ),
-                                Expanded(
-                                    child: Row(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/icons/icon_bedroom.svg'),
-                                        SizedBox(
-                                          width:
+                              ),
+                              Expanded(
+                                  child: Row(
+                                children: [
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          'assets/icons/icon_bedroom.svg'),
+                                      SizedBox(
+                                        width: SizeConfig.blockSizeHorizontal! *
+                                            0.5,
+                                      ),
+                                      Text(
+                                        '${list[index].bedroom} Bedroom',
+                                        style: kRalewayMedium.copyWith(
+                                          color: kGrey85,
+                                          fontSize:
                                               SizeConfig.blockSizeHorizontal! *
-                                                  0.5,
+                                                  2.5,
                                         ),
-                                        Text(
-                                          '6 Bedroom',
-                                          style: kRalewayMedium.copyWith(
-                                            color: kGrey85,
-                                            fontSize: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                2.5,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width:
-                                          SizeConfig.blockSizeHorizontal! * 1,
-                                    ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/icons/icon_bathroom.svg'),
-                                        SizedBox(
-                                          width:
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: SizeConfig.blockSizeHorizontal! * 1,
+                                  ),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          'assets/icons/icon_bathroom.svg'),
+                                      SizedBox(
+                                        width: SizeConfig.blockSizeHorizontal! *
+                                            0.5,
+                                      ),
+                                      Text(
+                                        '${list[index].bathroom} Bathroom',
+                                        style: kRalewayMedium.copyWith(
+                                          color: kGrey85,
+                                          fontSize:
                                               SizeConfig.blockSizeHorizontal! *
-                                                  0.5,
+                                                  2.5,
                                         ),
-                                        Text(
-                                          '4 Bathroom',
-                                          style: kRalewayMedium.copyWith(
-                                            color: kGrey85,
-                                            fontSize: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                2.5,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ))
-                              ],
-                            ))
-                          ],
-                        ));
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ))
+                            ],
+                          ))
+                        ],
+                      ),
+                    );
                   },
                 ),
               )

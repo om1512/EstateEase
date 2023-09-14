@@ -1,6 +1,6 @@
 import 'package:estateease/screens/home/home_content.dart';
+import 'package:estateease/screens/home/upload_property.dart';
 import 'package:estateease/utils/app_styles.dart';
-import 'package:estateease/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 
@@ -28,12 +28,20 @@ class _MainScreenState extends State<MainScreen> {
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
-            name: 'Profile',
+            name: 'Upload',
             baseStyle: kRalewayMedium,
             colorLineSelected: kBlue,
             selectedStyle: kRalewayMedium),
-        HomePage(),
-      )
+        UploadProperty(),
+      ),
+      ScreenHiddenDrawer(
+        ItemHiddenMenu(
+            name: 'Manage',
+            baseStyle: kRalewayMedium,
+            colorLineSelected: kBlue,
+            selectedStyle: kRalewayMedium),
+        UploadProperty(),
+      ),
     ];
   }
 
@@ -48,7 +56,9 @@ class _MainScreenState extends State<MainScreen> {
       tittleAppBar: Align(
         alignment: Alignment.centerRight,
         child: Padding(
-          padding: const EdgeInsets.only(right: 10, bottom: 10),
+          padding: const EdgeInsets.only(
+            right: 10,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -56,10 +66,10 @@ class _MainScreenState extends State<MainScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    'Location',
-                    style: kRalewayRegular.copyWith(
-                      color: kGrey83,
-                      fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
+                    'Surat',
+                    style: kRalewayMedium.copyWith(
+                      color: kWhite,
+                      fontSize: 23,
                     ),
                   ),
                   SizedBox(
@@ -70,16 +80,6 @@ class _MainScreenState extends State<MainScreen> {
                     style: TextStyle(color: Colors.green),
                   ),
                 ],
-              ),
-              SizedBox(
-                height: SizeConfig.blockSizeVertical! * 0.3,
-              ),
-              Text(
-                'Surat',
-                style: kRalewayMedium.copyWith(
-                  color: kWhite,
-                  fontSize: SizeConfig.blockSizeHorizontal! * 6,
-                ),
               ),
             ],
           ),
