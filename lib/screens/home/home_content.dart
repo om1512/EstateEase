@@ -6,6 +6,7 @@ import 'package:estateease/utils/app_styles.dart';
 import 'package:estateease/utils/size_config.dart';
 import 'package:estateease/screens/home/property_detail.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:uuid/uuid.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,245 +25,14 @@ class _HomePageState extends State<HomePage> {
     // pg and hostels
   ];
 
-  List<RentProperty> list = [
-    RentProperty(
-      name: "Dreamvilla House",
-      description:
-          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
-      address: "400 RingRoad, Opp. DMart",
-      bedroom: "5",
-      bathroom: "6",
-      balcony: "3",
-      price: "10,000",
-      per: "month",
-      thumbnail:
-          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      images: [
-        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
-      ],
-      location: PropertyLocation(
-          streetAddress: "99971 Stoltenberg Motorway",
-          city: "Surat",
-          state: "Gujrat",
-          postalZip: "394199",
-          country: "India",
-          latitude: "10.264",
-          longitude: "120.040"),
-      user: User(
-          image:
-              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
-          name: "Jake Benjamin",
-          phone: "+91 9895552525",
-          email: "agent@gmail.com"),
-    ),
-    RentProperty(
-      name: "Dreamvilla House",
-      description:
-          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
-      address: "400 RingRoad, Opp. DMart",
-      bedroom: "5",
-      bathroom: "6",
-      balcony: "3",
-      price: "10,000",
-      per: "month",
-      thumbnail:
-          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      images: [
-        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
-      ],
-      location: PropertyLocation(
-          streetAddress: "99971 Stoltenberg Motorway",
-          city: "Surat",
-          state: "Gujrat",
-          postalZip: "394199",
-          country: "India",
-          latitude: "10.264",
-          longitude: "120.040"),
-      user: User(
-          image:
-              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
-          name: "Jake Benjamin",
-          phone: "+91 9895552525",
-          email: "agent@gmail.com"),
-    ),
-    RentProperty(
-      name: "Dreamvilla House",
-      description:
-          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
-      address: "400 RingRoad, Opp. DMart",
-      bedroom: "5",
-      bathroom: "6",
-      balcony: "3",
-      price: "10,000",
-      per: "month",
-      thumbnail:
-          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      images: [
-        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
-      ],
-      location: PropertyLocation(
-          streetAddress: "99971 Stoltenberg Motorway",
-          city: "Surat",
-          state: "Gujrat",
-          postalZip: "394199",
-          country: "India",
-          latitude: "10.264",
-          longitude: "120.040"),
-      user: User(
-          image:
-              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
-          name: "Jake Benjamin",
-          phone: "+91 9895552525",
-          email: "agent@gmail.com"),
-    ),
-    RentProperty(
-      name: "Dreamvilla House",
-      description:
-          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
-      address: "400 RingRoad, Opp. DMart",
-      bedroom: "5",
-      bathroom: "6",
-      balcony: "3",
-      price: "10,000",
-      per: "month",
-      thumbnail:
-          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      images: [
-        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
-      ],
-      location: PropertyLocation(
-          streetAddress: "99971 Stoltenberg Motorway",
-          city: "Surat",
-          state: "Gujrat",
-          postalZip: "394199",
-          country: "India",
-          latitude: "10.264",
-          longitude: "120.040"),
-      user: User(
-          image:
-              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
-          name: "Jake Benjamin",
-          phone: "+91 9895552525",
-          email: "agent@gmail.com"),
-    ),
-    RentProperty(
-      name: "Dreamvilla House",
-      description:
-          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
-      address: "400 RingRoad, Opp. DMart",
-      bedroom: "5",
-      bathroom: "6",
-      balcony: "3",
-      price: "10,000",
-      per: "month",
-      thumbnail:
-          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      images: [
-        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
-      ],
-      location: PropertyLocation(
-          streetAddress: "99971 Stoltenberg Motorway",
-          city: "Surat",
-          state: "Gujrat",
-          postalZip: "394199",
-          country: "India",
-          latitude: "10.264",
-          longitude: "120.040"),
-      user: User(
-          image:
-              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
-          name: "Jake Benjamin",
-          phone: "+91 9895552525",
-          email: "agent@gmail.com"),
-    ),
-    RentProperty(
-      name: "Dreamvilla House",
-      description:
-          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
-      address: "400 RingRoad, Opp. DMart",
-      bedroom: "5",
-      bathroom: "6",
-      balcony: "3",
-      price: "10,000",
-      per: "month",
-      thumbnail:
-          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      images: [
-        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
-      ],
-      location: PropertyLocation(
-          streetAddress: "99971 Stoltenberg Motorway",
-          city: "Surat",
-          state: "Gujrat",
-          postalZip: "394199",
-          country: "India",
-          latitude: "10.264",
-          longitude: "120.040"),
-      user: User(
-          image:
-              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
-          name: "Jake Benjamin",
-          phone: "+91 9895552525",
-          email: "agent@gmail.com"),
-    ),
-    RentProperty(
-      name: "Dreamvilla House",
-      description:
-          "ntroducing our premium property, located in the heart of the city. This exquisite piece of real estate boasts a prime location, offering easy access to all major amenities and attractions.",
-      address: "400 RingRoad, Opp. DMart",
-      bedroom: "5",
-      bathroom: "6",
-      balcony: "3",
-      price: "10,000",
-      per: "month",
-      thumbnail:
-          "https://images.pexels.com/photos/2510067/pexels-photo-2510067.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-      images: [
-        "https://images.pexels.com/photos/2227832/pexels-photo-2227832.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/5570224/pexels-photo-5570224.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&w=600",
-        "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=600"
-      ],
-      location: PropertyLocation(
-          streetAddress: "99971 Stoltenberg Motorway",
-          city: "Surat",
-          state: "Gujrat",
-          postalZip: "394199",
-          country: "India",
-          latitude: "10.264",
-          longitude: "120.040"),
-      user: User(
-          image:
-              "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
-          name: "Jake Benjamin",
-          phone: "+91 9895552525",
-          email: "agent@gmail.com"),
-    ),
-  ];
+  String uuid = Uuid().v4(); // Generate a random UUID
 
   int current = 0;
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    List<RentProperty> list = [];
 
     return Scaffold(
       body: SafeArea(
@@ -544,7 +314,7 @@ class _HomePageState extends State<HomePage> {
                                                   0.5,
                                         ),
                                         Text(
-                                          list[index].address,
+                                          list[index].location.streetAddress,
                                           style: kRalewayRegular.copyWith(
                                             color: kWhite,
                                             fontSize: SizeConfig

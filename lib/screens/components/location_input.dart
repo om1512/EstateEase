@@ -58,6 +58,7 @@ class _LocationInput extends State<LocationInput> {
     long = _locationData.longitude;
     maplocation =
         "https://maps.googleapis.com/maps/api/staticmap?center=$lat,$long&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C$lat,$long&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=AIzaSyAr1dn7Gm4qQzKjgqocTqTCya1g8CKp7ZY";
+    widget.setLatLong(lat!, long!);
   }
 
   @override

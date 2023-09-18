@@ -16,6 +16,8 @@ class _MultipleImageSelectorState extends State<MultipleImageSelector> {
   List<XFile> imageFileList = [];
   void selectImages() async {
     imageFileList = await imagePicker.pickMultiImage();
+    widget.setImageList(imageFileList);
+
     setState(() {});
   }
 
@@ -46,7 +48,7 @@ class _MultipleImageSelectorState extends State<MultipleImageSelector> {
               ),
               label: Text(
                 imageFileList.isEmpty
-                    ? 'Add Thumbnail Picture'
+                    ? 'Add Property Picture'
                     : "${imageFileList.length} Images are selected",
                 style: kRalewayMedium.copyWith(color: kBlue),
               ),
@@ -56,6 +58,4 @@ class _MultipleImageSelectorState extends State<MultipleImageSelector> {
       ),
     );
   }
-
-  
 }

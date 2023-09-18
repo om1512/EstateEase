@@ -1,13 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estateease/models/PropertyLocation.dart';
+import 'package:estateease/models/RentProperty.dart';
 import 'package:estateease/screens/components/image_input.dart';
 import 'package:estateease/screens/components/location_input.dart';
 import 'package:estateease/screens/components/multiple_image_input.dart';
+import 'package:estateease/services/firebase_storage.dart';
+import 'package:estateease/services/firestore_methods.dart';
 import 'package:estateease/utils/app_styles.dart';
 import 'package:estateease/utils/showSnackBar.dart';
 import 'package:estateease/utils/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
+import 'package:uuid/uuid.dart';
+import 'package:estateease/models/Users.dart' as User;
 
 class UploadProperty extends StatefulWidget {
   const UploadProperty({super.key});
@@ -17,6 +25,8 @@ class UploadProperty extends StatefulWidget {
 }
 
 class _UploadPropertyState extends State<UploadProperty> {
+  Storage storage = Storage();
+
   TextEditingController name = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController bedroom = TextEditingController();
@@ -33,6 +43,8 @@ class _UploadPropertyState extends State<UploadProperty> {
   double? lat;
   double? long;
   String per = "month";
+
+  // const CurrentUserData =
   void loc() async {
     Location location = new Location();
     bool _serviceEnabled;
@@ -501,6 +513,8 @@ class _UploadPropertyState extends State<UploadProperty> {
   }
 
   void _saveData() {
+    String propertyId = const Uuid().v4();
+    String userId = FirebaseAuth.instance.currentUser!.uid;
     if (name.text.isNotEmpty &&
         description.text.isNotEmpty &&
         bedroom.text.isNotEmpty &&
@@ -516,8 +530,59 @@ class _UploadPropertyState extends State<UploadProperty> {
         postalZip.text.isNotEmpty &&
         country.text.isNotEmpty) {
       showSnackBar(context, "Every thing is Filled");
+      PropertyLocation location = PropertyLocation(
+          streetAddress: streetAddress.text,
+          city: city.text,
+          state: state.text,
+          postalZip: postalZip.text,
+          country: country.text,
+          latitude: lat.toString(),
+          longitude: long.toString());
+      RentProperty property = RentProperty(
+          id: propertyId,
+          name: name.text,
+          description: description.text,
+          bedroom: bedroom.text,
+          bathroom: bathroom.text,
+          balcony: "1",
+          price: rentAmount.text,
+          per: per,
+          thumbnail: _selectedImage,
+          images: [],
+          location: location,
+          userId: userId);
+      FireStoreMethods().addProperty(context, userId, property, imageList);
+      _dialogBuilder(context);
     } else {
       showSnackBar(context, "Please Fill All The Details");
     }
+  }
+
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Property Uploaded '),
+          content: const Text(
+            'We will verify your property soon stay tuned. if we find any illegal stuff then we will take strick action',
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: Text(
+                'Okay',
+                style: kRalewayMedium.copyWith(color: kBlue),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

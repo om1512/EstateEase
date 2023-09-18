@@ -162,7 +162,7 @@ class PropertyDetail extends StatelessWidget {
                                 height: SizeConfig.blockSizeVertical! * 0.5,
                               ),
                               Text(
-                                property.address,
+                                property.location.streetAddress,
                                 style: kRalewayRegular.copyWith(
                                   color: kWhite,
                                   fontSize: SizeConfig.blockSizeHorizontal! * 3,
@@ -300,26 +300,26 @@ class PropertyDetail extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundImage: NetworkImage(
-                          property.user.image,
-                        ),
-                        backgroundColor: kBlue,
-                      ),
+                      // CircleAvatar(
+                      //   radius: 20,
+                      //   backgroundImage: NetworkImage(
+                      //     property.user.image,
+                      //   ),
+                      //   backgroundColor: kBlue,
+                      // ),
                       SizedBox(
                         width: SizeConfig.blockSizeHorizontal! * 4,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            property.user.name,
-                            style: kRalewayMedium.copyWith(
-                              color: kBlack,
-                              fontSize: SizeConfig.blockSizeHorizontal! * 4,
-                            ),
-                          ),
+                          // Text(
+                          //   property.user.name,
+                          //   style: kRalewayMedium.copyWith(
+                          //     color: kBlack,
+                          //     fontSize: SizeConfig.blockSizeHorizontal! * 4,
+                          //   ),
+                          // ),
                           SizedBox(
                             height: SizeConfig.blockSizeVertical! * 0.2,
                           ),

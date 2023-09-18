@@ -1,4 +1,5 @@
 import 'package:estateease/firebase_options.dart';
+import 'package:estateease/screens/auth/registration.dart';
 import 'package:estateease/screens/home/home_content.dart';
 import 'package:estateease/screens/start/main_screen.dart';
 import 'package:estateease/screens/start/splace_screen.dart';

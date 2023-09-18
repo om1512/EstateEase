@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:image_picker/image_picker.dart';
 
 // ignore: must_be_immutable
 class Storage extends StatelessWidget {
@@ -14,7 +15,6 @@ class Storage extends StatelessWidget {
   final FirebaseStorage storage = FirebaseStorage.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   String url = "";
-
   Future<String> uploadSingleFile(
     BuildContext context,
     String fileId,
@@ -50,6 +50,7 @@ class Storage extends StatelessWidget {
             url = dowurl.toString();
             EasyLoading.showSuccess("Image Uploaded");
             print(url);
+
             FirebaseFirestore.instance
                 .collection('Users')
                 .doc(auth.currentUser!.uid)
@@ -64,6 +65,95 @@ class Storage extends StatelessWidget {
     }
 
     return url;
+  }
+
+  Future<String> uploadSingleFileOfProperty(BuildContext context, String fileId,
+      String filePath, String propertyId, String use) async {
+    File file = File(filePath);
+
+    try {
+      final metadata = SettableMetadata(contentType: "image/jpeg");
+
+      final storageRef = FirebaseStorage.instance.ref();
+      if (use == "multipleImage") {
+        final uploadTask = storageRef
+            .child('Property/${propertyId}/$fileId')
+            .putFile(file, metadata);
+        uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
+          switch (taskSnapshot.state) {
+            case TaskState.running:
+              break;
+            case TaskState.paused:
+              EasyLoading.showError("Something Went Wrong");
+              break;
+            case TaskState.canceled:
+              EasyLoading.showError("Failed");
+              break;
+            case TaskState.error:
+              EasyLoading.showError("Failed");
+              break;
+            case TaskState.success:
+              var dowUrl = await storageRef
+                  .child('Property/${propertyId}/$fileId')
+                  .getDownloadURL();
+              FirebaseFirestore.instance
+                  .collection('Properties')
+                  .doc(propertyId)
+                  .update({
+                "images": FieldValue.arrayUnion([dowUrl])
+              });
+
+              break;
+          }
+        });
+      } else if (use == "singleImage") {
+        final uploadTask = storageRef
+            .child('Property/${propertyId}/Thumbnail')
+            .putFile(file, metadata);
+        uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) async {
+          switch (taskSnapshot.state) {
+            case TaskState.running:
+              break;
+            case TaskState.paused:
+              EasyLoading.showError("Something Went Wrong");
+              break;
+            case TaskState.canceled:
+              EasyLoading.showError("Failed");
+              break;
+            case TaskState.error:
+              EasyLoading.showError("Failed");
+              break;
+            case TaskState.success:
+              var dowUrl = await storageRef
+                  .child('Property/${propertyId}/Thumbnail')
+                  .getDownloadURL();
+              FirebaseFirestore.instance
+                  .collection('Properties')
+                  .doc(propertyId)
+                  .update({"thumbnail": dowUrl});
+
+              break;
+          }
+        });
+      }
+    } on FirebaseException catch (e) {
+      EasyLoading.dismiss();
+      showSnackBar(context, e.message!);
+    }
+
+    return url;
+  }
+
+  Future<List<String>> uploadFiles(
+      BuildContext context, List<XFile> _images, String propertyId) async {
+    print("this function is Called");
+    EasyLoading.showSuccess("Image Uploaded");
+    var imageUrls = await Future.wait(_images.map((_image) =>
+        uploadSingleFileOfProperty(context, _images.indexOf(_image).toString(),
+            _image.path, propertyId, "multipleImage")));
+    print("After Uploading Final Result $imageUrls");
+
+    return imageUrls;
   }
 
   @override
