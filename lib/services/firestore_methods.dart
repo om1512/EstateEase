@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estateease/models/RentProperty.dart';
-import 'package:estateease/screens/home/property_detail.dart';
 import 'package:estateease/screens/start/main_screen.dart';
 import 'package:estateease/services/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -57,13 +56,26 @@ class FireStoreMethods {
     }
   }
 
-  Future<String?> addProperty(BuildContext context, String uid,
-      RentProperty property, List<XFile> imageList) async {
-    CollectionReference user =
-        FirebaseFirestore.instance.collection('Properties/');
-    await user.doc(property.id).set(property.toJson(), SetOptions(merge: true));
-    Storage().uploadFiles(context, imageList, property.id);
-    Storage().uploadSingleFileOfProperty(
-        context, "Thumbnai", property.thumbnail, property.id, "singleImage");
+  Future<void> addProperty(BuildContext context, String uid,
+      RentProperty property, List<XFile> imageList, String propertyType) async {
+    try {
+      CollectionReference user =
+          FirebaseFirestore.instance.collection('Properties/');
+      await user.doc("Everyone").collection(propertyType).doc(property.id).set(
+            property.toJson(),
+          );
+      Storage().uploadFiles(
+          context, imageList, property.id, propertyType, "Everyone");
+      Storage().uploadSingleFileOfProperty(
+          context,
+          "Thumbnai",
+          property.thumbnail,
+          property.id,
+          "singleImage",
+          propertyType,
+          "Everyone");
+    } catch (error) {
+      print("error" + error.toString());
+    }
   }
 }

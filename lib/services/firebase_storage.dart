@@ -67,8 +67,14 @@ class Storage extends StatelessWidget {
     return url;
   }
 
-  Future<String> uploadSingleFileOfProperty(BuildContext context, String fileId,
-      String filePath, String propertyId, String use) async {
+  Future<String> uploadSingleFileOfProperty(
+      BuildContext context,
+      String fileId,
+      String filePath,
+      String propertyId,
+      String use,
+      String propertyType,
+      String category) async {
     File file = File(filePath);
 
     try {
@@ -98,6 +104,8 @@ class Storage extends StatelessWidget {
                   .getDownloadURL();
               FirebaseFirestore.instance
                   .collection('Properties')
+                  .doc(category)
+                  .collection(propertyType)
                   .doc(propertyId)
                   .update({
                 "images": FieldValue.arrayUnion([dowUrl])
@@ -129,6 +137,8 @@ class Storage extends StatelessWidget {
                   .getDownloadURL();
               FirebaseFirestore.instance
                   .collection('Properties')
+                  .doc(category)
+                  .collection(propertyType)
                   .doc(propertyId)
                   .update({"thumbnail": dowUrl});
 
@@ -144,13 +154,13 @@ class Storage extends StatelessWidget {
     return url;
   }
 
-  Future<List<String>> uploadFiles(
-      BuildContext context, List<XFile> _images, String propertyId) async {
+  Future<List<String>> uploadFiles(BuildContext context, List<XFile> _images,
+      String propertyId, String propertyType, String category) async {
     print("this function is Called");
     EasyLoading.showSuccess("Image Uploaded");
     var imageUrls = await Future.wait(_images.map((_image) =>
         uploadSingleFileOfProperty(context, _images.indexOf(_image).toString(),
-            _image.path, propertyId, "multipleImage")));
+            _image.path, propertyId, "multipleImage", propertyType, category)));
     print("After Uploading Final Result $imageUrls");
 
     return imageUrls;

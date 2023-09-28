@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:estateease/models/place.dart';
 import 'package:estateease/services/map.dart';
+import 'package:estateease/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -164,13 +165,25 @@ class _LocationInputState extends State<LocationInput> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TextButton.icon(
-              icon: const Icon(Icons.location_on),
-              label: const Text('Get Current Location'),
+              icon: const Icon(
+                Icons.location_on,
+                color: kBlue,
+              ),
+              label: Text(
+                'Current Location',
+                style: kRalewayMedium.copyWith(color: kBlue),
+              ),
               onPressed: _getCurrentLocation,
             ),
             TextButton.icon(
-              icon: const Icon(Icons.map),
-              label: const Text('Select on Map'),
+              icon: const Icon(
+                Icons.map,
+                color: kBlue,
+              ),
+              label: Text(
+                'Select on Map',
+                style: kRalewayMedium.copyWith(color: kBlue),
+              ),
               onPressed: _selectOnMap,
             ),
           ],

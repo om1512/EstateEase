@@ -1,7 +1,8 @@
+import 'package:estateease/screens/home/upload_property.dart';
 import 'package:estateease/utils/app_styles.dart';
 import 'package:estateease/utils/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:estateease/utils/showSnackBar.dart';
 
 class PropertyTypes extends StatefulWidget {
   const PropertyTypes({super.key});
@@ -12,6 +13,16 @@ class PropertyTypes extends StatefulWidget {
 
 class _PropertyTypesState extends State<PropertyTypes> {
   int selected = 0;
+  List<String> propertyTypes = [
+    "Apartment",
+    "House",
+    "Villa",
+    "Hotel",
+    "Cottage",
+    "Hostel",
+    "PG",
+    "Flat"
+  ];
   Widget customRadio(String text, int index) {
     return OutlinedButton(
       onPressed: () {
@@ -106,8 +117,18 @@ class _PropertyTypesState extends State<PropertyTypes> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               IconButton(
-                onPressed: () {},
-                icon: Icon(
+                onPressed: () {
+                  (selected >= 0 && selected <= 4)
+                      ? Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (ctx) => UploadProperty(
+                              propertyType: propertyTypes[selected],
+                            ),
+                          ),
+                        )
+                      : showSnackBar(context, "Dev In Progress");
+                },
+                icon: const Icon(
                   Icons.arrow_circle_right_outlined,
                   color: kWhite,
                 ),

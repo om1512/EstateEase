@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
             baseStyle: kRalewayMedium,
             colorLineSelected: kBlue,
             selectedStyle: kRalewayMedium),
-        HomePage(),
+        const HomePage(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -33,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
             baseStyle: kRalewayMedium,
             colorLineSelected: kBlue,
             selectedStyle: kRalewayMedium),
-        PropertyTypes(),
+        const PropertyTypes(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -41,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
             baseStyle: kRalewayMedium,
             colorLineSelected: kBlue,
             selectedStyle: kRalewayMedium),
-        UploadProperty(),
+        const PropertyTypes(),
       ),
     ];
   }
