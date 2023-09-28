@@ -1,4 +1,5 @@
 import 'package:estateease/screens/home/home_content.dart';
+import 'package:estateease/screens/home/property_types.dart';
 import 'package:estateease/screens/home/upload_property.dart';
 import 'package:estateease/utils/app_styles.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
             baseStyle: kRalewayMedium,
             colorLineSelected: kBlue,
             selectedStyle: kRalewayMedium),
-        UploadProperty(),
+        PropertyTypes(),
       ),
       ScreenHiddenDrawer(
         ItemHiddenMenu(

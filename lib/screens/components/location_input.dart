@@ -1,147 +1,180 @@
 import 'dart:convert';
 
-import 'package:estateease/utils/app_styles.dart';
-import 'package:estateease/utils/size_config.dart';
+import 'package:estateease/models/place.dart';
+import 'package:estateease/services/map.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:http/http.dart' as http;
 
 class LocationInput extends StatefulWidget {
-  const LocationInput({super.key, required this.setLatLong});
-  final void Function(double lat, double long) setLatLong;
+  const LocationInput({super.key, required this.onSelectLocation});
+
+  final void Function(PlaceLocation location, AbsoluteAddress address)
+      onSelectLocation;
 
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _LocationInput();
+  State<LocationInput> createState() {
+    return _LocationInputState();
   }
 }
 
-class _LocationInput extends State<LocationInput> {
-  double? lat;
-  double? long;
-  var gettinglocation = false;
-  var pd = "";
-  var src = "select current location button";
-  var maplocation =
-      "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=AIzaSyAr1dn7Gm4qQzKjgqocTqTCya1g8CKp7ZY";
-  void loc() async {
-    Location location = new Location();
+class _LocationInputState extends State<LocationInput> {
+  PlaceLocation? _pickedLocation;
+  AbsoluteAddress? absoluteAddress;
+  var _isGettingLocation = false;
 
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
+  String get locationImage {
+    if (_pickedLocation == null) {
+      return '';
+    }
+    final lat = _pickedLocation!.latitude;
+    final lng = _pickedLocation!.longitude;
+    return 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$lng=&zoom=16&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C$lat,$lng&key=AIzaSyAr1dn7Gm4qQzKjgqocTqTCya1g8CKp7ZY';
+  }
 
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
+  Future<void> _savePlace(double latitude, double longitude) async {
+    final url = Uri.parse(
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=AIzaSyAr1dn7Gm4qQzKjgqocTqTCya1g8CKp7ZY');
+    final response = await http.get(url);
+    final resData = json.decode(response.body);
+    final address = resData['results'][0]['formatted_address'];
+    final streetAddress = resData['results'][0]['address_components'][0]
+            ["long_name"] +
+        ", " +
+        resData['results'][0]['address_components'][1]["long_name"] +
+        ", " +
+        resData['results'][0]['address_components'][2]["long_name"] +
+        ", " +
+        resData['results'][0]['address_components'][3]["long_name"];
+    final city = resData['results'][0]['address_components'][4]["long_name"];
+    final state = resData['results'][0]['address_components'][5]["long_name"];
+    final country = resData['results'][0]['address_components'][6]["long_name"];
+    final postalZip =
+        resData['results'][0]['address_components'][7]["long_name"];
+    setState(() {
+      _pickedLocation = PlaceLocation(
+        latitude: latitude,
+        longitude: longitude,
+        address: address,
+      );
+
+      absoluteAddress = AbsoluteAddress(
+          streetAddress: streetAddress,
+          city: city,
+          state: state,
+          postalZip: postalZip,
+          country: country);
+      _isGettingLocation = false;
+    });
+
+    widget.onSelectLocation(_pickedLocation!, absoluteAddress!);
+  }
+
+  void _getCurrentLocation() async {
+    Location location = Location();
+
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+    LocationData locationData;
+
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
         return;
       }
     }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
         return;
       }
     }
+
     setState(() {
-      gettinglocation = true;
+      _isGettingLocation = true;
     });
-    _locationData = await location.getLocation();
-    setState(() {
-      gettinglocation = false;
-    });
-    lat = _locationData.latitude;
-    long = _locationData.longitude;
-    maplocation =
-        "https://maps.googleapis.com/maps/api/staticmap?center=$lat,$long&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7Clabel:A%7C$lat,$long&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=AIzaSyAr1dn7Gm4qQzKjgqocTqTCya1g8CKp7ZY";
-    widget.setLatLong(lat!, long!);
+
+    locationData = await location.getLocation();
+    final lat = locationData.latitude;
+    final lng = locationData.longitude;
+
+    if (lat == null || lng == null) {
+      return;
+    }
+
+    _savePlace(lat, lng);
+  }
+
+  void _selectOnMap() async {
+    final pickedLocation = await Navigator.of(context).push<LatLng>(
+      MaterialPageRoute(
+        builder: (ctx) => MapScreen(),
+      ),
+    );
+
+    if (pickedLocation == null) {
+      return;
+    }
+
+    _savePlace(pickedLocation.latitude, pickedLocation.longitude);
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    Widget previewContent = Text(
+      'No location chosen',
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+    );
 
-    Widget cd = (lat != null && long != null)
-        ? Image.network(
-            maplocation,
-            fit: BoxFit.cover,
-          )
-        : Text(pd);
-    if (gettinglocation) {
-      cd = CircularProgressIndicator();
+    if (_pickedLocation != null) {
+      previewContent = Image.network(
+        locationImage,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        height: double.infinity,
+      );
     }
+
+    if (_isGettingLocation) {
+      previewContent = const CircularProgressIndicator();
+    }
+
     return Column(
       children: [
         Container(
+          height: 170,
           width: double.infinity,
-          height: 180,
+          alignment: Alignment.center,
           decoration: BoxDecoration(
             border: Border.all(
               width: 1,
-              color: kGrey,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
             ),
-            borderRadius: BorderRadius.circular(kBorderRadius10),
           ),
-          alignment: Alignment.center,
-          child: cd,
-        ),
-        const SizedBox(
-          height: 10,
+          child: previewContent,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: kGrey,
-                ),
-                borderRadius: BorderRadius.circular(kBorderRadius10),
-              ),
-              child: TextButton.icon(
-                onPressed: loc,
-                icon: const Icon(
-                  Icons.location_on,
-                  color: kGrey,
-                ),
-                label: Text(
-                  "Current Location",
-                  style: kRalewayMedium.copyWith(
-                      color: kBlue,
-                      fontSize: SizeConfig.blockSizeHorizontal! * 3),
-                ),
-              ),
+            TextButton.icon(
+              icon: const Icon(Icons.location_on),
+              label: const Text('Get Current Location'),
+              onPressed: _getCurrentLocation,
             ),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: kGrey,
-                ),
-                borderRadius: BorderRadius.circular(kBorderRadius10),
-              ),
-              child: TextButton.icon(
-                onPressed: () => {},
-                icon: const Icon(
-                  Icons.map,
-                  color: kGrey,
-                ),
-                label: Text(
-                  "Location On Map",
-                  style: kRalewayMedium.copyWith(
-                      color: kBlue,
-                      fontSize: SizeConfig.blockSizeHorizontal! * 3),
-                ),
-              ),
+            TextButton.icon(
+              icon: const Icon(Icons.map),
+              label: const Text('Select on Map'),
+              onPressed: _selectOnMap,
             ),
           ],
         ),
-        Container(),
       ],
     );
   }

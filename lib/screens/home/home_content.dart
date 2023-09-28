@@ -1,6 +1,4 @@
-import 'package:estateease/models/PropertyLocation.dart';
 import 'package:estateease/models/RentProperty.dart';
-import 'package:estateease/models/Users.dart';
 import 'package:flutter/material.dart';
 import 'package:estateease/utils/app_styles.dart';
 import 'package:estateease/utils/size_config.dart';
@@ -26,8 +24,9 @@ class _HomePageState extends State<HomePage> {
   ];
 
   String uuid = Uuid().v4(); // Generate a random UUID
-
   int current = 0;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -314,7 +313,7 @@ class _HomePageState extends State<HomePage> {
                                                   0.5,
                                         ),
                                         Text(
-                                          list[index].location.streetAddress,
+                                          list[index].location.address,
                                           style: kRalewayRegular.copyWith(
                                             color: kWhite,
                                             fontSize: SizeConfig

@@ -1,5 +1,5 @@
-import 'package:estateease/models/PropertyLocation.dart';
 import 'package:estateease/models/Users.dart' as User;
+import 'package:estateease/models/place.dart';
 
 class RentProperty {
   String id;
@@ -13,7 +13,8 @@ class RentProperty {
   String per;
   String thumbnail;
   List<String> images;
-  PropertyLocation location;
+  PlaceLocation location;
+  AbsoluteAddress absoluteAddress;
   String userId;
 
   RentProperty({
@@ -28,6 +29,7 @@ class RentProperty {
     required this.thumbnail,
     required this.images,
     required this.location,
+    required this.absoluteAddress,
     required this.userId,
   });
 
@@ -42,7 +44,8 @@ class RentProperty {
         per: json["per"],
         thumbnail: json["thumbnail"],
         images: List<String>.from(json["images"].map((x) => x)),
-        location: PropertyLocation.fromJson(json["location"]),
+        location: PlaceLocation.fromJson(json["location"]),
+        absoluteAddress: AbsoluteAddress.fromJson(json["absoluteAddress"]),
         userId: json["userId"],
       );
 
@@ -58,6 +61,7 @@ class RentProperty {
         "thumbnail": thumbnail,
         "images": List<dynamic>.from(images.map((x) => x)),
         "location": location.toJson(),
+        "absoluteAddress": absoluteAddress.toJson(),
         "userId": userId,
       };
 }

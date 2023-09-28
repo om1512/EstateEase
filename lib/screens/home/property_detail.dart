@@ -162,7 +162,7 @@ class PropertyDetail extends StatelessWidget {
                                 height: SizeConfig.blockSizeVertical! * 0.5,
                               ),
                               Text(
-                                property.location.streetAddress,
+                                property.location.address,
                                 style: kRalewayRegular.copyWith(
                                   color: kWhite,
                                   fontSize: SizeConfig.blockSizeHorizontal! * 3,

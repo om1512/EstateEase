@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:estateease/models/PropertyLocation.dart';
 import 'package:estateease/models/RentProperty.dart';
+import 'package:estateease/models/place.dart';
 import 'package:estateease/screens/components/image_input.dart';
 import 'package:estateease/screens/components/location_input.dart';
 import 'package:estateease/screens/components/multiple_image_input.dart';
@@ -10,12 +9,10 @@ import 'package:estateease/utils/app_styles.dart';
 import 'package:estateease/utils/showSnackBar.dart';
 import 'package:estateease/utils/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:uuid/uuid.dart';
-import 'package:estateease/models/Users.dart' as User;
 
 class UploadProperty extends StatefulWidget {
   const UploadProperty({super.key});
@@ -43,7 +40,8 @@ class _UploadPropertyState extends State<UploadProperty> {
   double? lat;
   double? long;
   String per = "month";
-
+  PlaceLocation? _selectedLocation;
+  AbsoluteAddress? absoluteAddress;
   // const CurrentUserData =
   void loc() async {
     Location location = new Location();
@@ -340,10 +338,16 @@ class _UploadPropertyState extends State<UploadProperty> {
               height: 20,
             ),
             LocationInput(
-              setLatLong: (lat, long) {
-                this.lat = lat;
-                this.long = long;
-                showSnackBar(context, "${this.lat} ${this.long}");
+              onSelectLocation: (location, address) {
+                _selectedLocation = location;
+                absoluteAddress = address;
+                setState(() {
+                  streetAddress.text = absoluteAddress!.streetAddress;
+                  city.text = absoluteAddress!.city;
+                  state.text = absoluteAddress!.state;
+                  country.text = absoluteAddress!.country;
+                  postalZip.text = absoluteAddress!.postalZip;
+                });
               },
             ),
             const SizedBox(
@@ -515,6 +519,7 @@ class _UploadPropertyState extends State<UploadProperty> {
   void _saveData() {
     String propertyId = const Uuid().v4();
     String userId = FirebaseAuth.instance.currentUser!.uid;
+
     if (name.text.isNotEmpty &&
         description.text.isNotEmpty &&
         bedroom.text.isNotEmpty &&
@@ -522,22 +527,19 @@ class _UploadPropertyState extends State<UploadProperty> {
         rentAmount.text.isNotEmpty &&
         _selectedImage != '' &&
         imageList.isNotEmpty &&
-        lat != null &&
-        long != null &&
         streetAddress.text.isNotEmpty &&
         city.text.isNotEmpty &&
         state.text.isNotEmpty &&
         postalZip.text.isNotEmpty &&
         country.text.isNotEmpty) {
       showSnackBar(context, "Every thing is Filled");
-      PropertyLocation location = PropertyLocation(
+
+      absoluteAddress = AbsoluteAddress(
           streetAddress: streetAddress.text,
           city: city.text,
           state: state.text,
           postalZip: postalZip.text,
-          country: country.text,
-          latitude: lat.toString(),
-          longitude: long.toString());
+          country: country.text);
       RentProperty property = RentProperty(
           id: propertyId,
           name: name.text,
@@ -549,7 +551,8 @@ class _UploadPropertyState extends State<UploadProperty> {
           per: per,
           thumbnail: _selectedImage,
           images: [],
-          location: location,
+          location: _selectedLocation!,
+          absoluteAddress: absoluteAddress!,
           userId: userId);
       FireStoreMethods().addProperty(context, userId, property, imageList);
       _dialogBuilder(context);
