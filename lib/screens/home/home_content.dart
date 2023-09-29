@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estateease/models/RentProperty.dart';
+import 'package:estateease/services/firestore_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:estateease/utils/app_styles.dart';
 import 'package:estateease/utils/size_config.dart';
@@ -25,8 +27,7 @@ class _HomePageState extends State<HomePage> {
 
   String uuid = Uuid().v4(); // Generate a random UUID
   int current = 0;
-
-
+  FireStoreMethods fireStoreMethods = FireStoreMethods();
 
   @override
   Widget build(BuildContext context) {
@@ -191,144 +192,168 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(
                 height: 272,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: list.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: (() => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PropertyDetail(property: list[index]),
-                            ),
-                          )),
-                      child: Container(
-                        height: 272,
-                        width: 222,
-                        margin: EdgeInsets.only(
-                          left: kPadding20,
-                          right: index == list.length - 1 ? kPadding20 : 0,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            kBorderRadius20,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              spreadRadius: 0,
-                              offset: const Offset(0, 18),
-                              blurRadius: 18,
-                              color: kBlack.withOpacity(0.1),
-                            )
-                          ],
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(list[index].thumbnail),
-                          ),
-                        ),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                height: 136,
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.only(
-                                    bottomLeft:
-                                        Radius.circular(kBorderRadius20),
-                                    bottomRight:
-                                        Radius.circular(kBorderRadius20),
-                                  ),
-                                  gradient: kLinearGradientBlack,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("Properties")
+                      .doc("Everyone")
+                      .collection(categories[current])
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    List<GestureDetector> propertyWidgets = [];
+                    if (snapshot.hasData) {
+                      final properties = snapshot.data?.docs.reversed.toList();
+                      for (var property in properties!) {
+                        final propertyWidget = GestureDetector(
+                          onTap: (() => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PropertyDetail(
+                                      property: RentProperty.fromJson(property
+                                          .data() as Map<String, dynamic>)),
                                 ),
+                              )),
+                          child: Container(
+                            height: 272,
+                            width: 222,
+                            margin: const EdgeInsets.only(
+                              left: kPadding20,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(
+                                kBorderRadius20,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  spreadRadius: 0,
+                                  offset: const Offset(0, 18),
+                                  blurRadius: 18,
+                                  color: kBlack.withOpacity(0.1),
+                                )
+                              ],
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(property["thumbnail"]),
                               ),
                             ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: kPadding16,
-                                  vertical: kPadding20,
-                                ),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              kBorderRadius20,
-                                            ),
-                                            color: kBlack.withOpacity(
-                                              0.24,
-                                            ),
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: kPadding8,
-                                            vertical: kPadding4,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/icons/icon_pinpoint.svg',
-                                              ),
-                                              const SizedBox(
-                                                width: kPadding4,
-                                              ),
-                                              Text(
-                                                '1.8 km',
-                                                style: kRalewayRegular.copyWith(
-                                                  color: kWhite,
-                                                  fontSize: SizeConfig
-                                                          .blockSizeHorizontal! *
-                                                      2.5,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        )
-                                      ],
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    height: 136,
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.only(
+                                        bottomLeft:
+                                            Radius.circular(kBorderRadius20),
+                                        bottomRight:
+                                            Radius.circular(kBorderRadius20),
+                                      ),
+                                      gradient: kLinearGradientBlack,
                                     ),
-                                    Column(
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: kPadding16,
+                                      vertical: kPadding20,
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          list[index].name,
-                                          style: kRalewayMedium.copyWith(
-                                            color: kWhite,
-                                            fontSize: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                4,
-                                          ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  kBorderRadius20,
+                                                ),
+                                                color: kBlack.withOpacity(
+                                                  0.24,
+                                                ),
+                                              ),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: kPadding8,
+                                                vertical: kPadding4,
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    'assets/icons/icon_pinpoint.svg',
+                                                  ),
+                                                  const SizedBox(
+                                                    width: kPadding4,
+                                                  ),
+                                                  Text(
+                                                    '1.8 km',
+                                                    style: kRalewayRegular
+                                                        .copyWith(
+                                                      color: kWhite,
+                                                      fontSize: SizeConfig
+                                                              .blockSizeHorizontal! *
+                                                          2.5,
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                        SizedBox(
-                                          height:
-                                              SizeConfig.blockSizeVertical! *
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              property['name'],
+                                              style: kRalewayMedium.copyWith(
+                                                color: kWhite,
+                                                fontSize: SizeConfig
+                                                        .blockSizeHorizontal! *
+                                                    4,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: SizeConfig
+                                                      .blockSizeVertical! *
                                                   0.5,
-                                        ),
-                                        Text(
-                                          list[index].location.address,
-                                          style: kRalewayRegular.copyWith(
-                                            color: kWhite,
-                                            fontSize: SizeConfig
-                                                    .blockSizeHorizontal! *
-                                                2.5,
-                                          ),
+                                            ),
+                                            Text(
+                                              property['absoluteAddress']
+                                                  ['streetAddress'],
+                                              style: kRalewayRegular.copyWith(
+                                                color: kWhite,
+                                                fontSize: SizeConfig
+                                                        .blockSizeHorizontal! *
+                                                    2.5,
+                                              ),
+                                            )
+                                          ],
                                         )
                                       ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+
+                        propertyWidgets.add(propertyWidget);
+                      }
+                    }
+                    return Expanded(
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        padding: EdgeInsets.only(right: kPadding20),
+                        children: propertyWidgets,
                       ),
                     );
                   },

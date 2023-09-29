@@ -1,17 +1,40 @@
 import 'package:estateease/models/RentProperty.dart';
+import 'package:estateease/services/firestore_methods.dart';
+import 'package:estateease/services/location_config.dart';
 import 'package:flutter/material.dart';
 import 'package:estateease/utils/app_styles.dart';
 import 'package:estateease/utils/size_config.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:readmore/readmore.dart';
 
-class PropertyDetail extends StatelessWidget {
-  const PropertyDetail({Key? key, required this.property}) : super(key: key);
+class PropertyDetail extends StatefulWidget {
+  PropertyDetail({Key? key, required this.property}) : super(key: key);
   final RentProperty property;
+
+  @override
+  State<PropertyDetail> createState() => _PropertyDetailState();
+}
+
+class _PropertyDetailState extends State<PropertyDetail> {
+  final FireStoreMethods fireStoreMethods = FireStoreMethods();
+
+  String image = "";
+  String name = "";
+  String mapImageLink = "";
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-
+    fireStoreMethods.getUserData(widget.property.userId).then(
+      (value) {
+        setState(() {
+          image = value.image;
+          name = value.name;
+        });
+      },
+    );
+    mapImageLink = LocationHelper.generateLocationPreviewImage(
+        lat: widget.property.location.latitude,
+        lng: widget.property.location.longitude);
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
@@ -41,7 +64,7 @@ class PropertyDetail extends StatelessWidget {
                     height: SizeConfig.blockSizeVertical! * 0.5,
                   ),
                   Text(
-                    '${property.price} / ${property.per}',
+                    '${widget.property.price} / ${widget.property.per}',
                     style: kRalewayMedium.copyWith(
                       color: kBlack,
                       fontSize: SizeConfig.blockSizeHorizontal! * 4,
@@ -82,7 +105,7 @@ class PropertyDetail extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(
-              left: kPadding20, right: kPadding20, top: kPadding8),
+              left: kPadding20, right: kPadding20, top: kPadding8, bottom: 50),
           child: Column(
             children: [
               Container(
@@ -103,7 +126,7 @@ class PropertyDetail extends StatelessWidget {
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(
-                      property.thumbnail,
+                      widget.property.thumbnail,
                     ),
                   ),
                 ),
@@ -151,7 +174,7 @@ class PropertyDetail extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                property.name,
+                                widget.property.name,
                                 style: kRalewaySemibold.copyWith(
                                   color: kWhite,
                                   fontSize:
@@ -162,7 +185,7 @@ class PropertyDetail extends StatelessWidget {
                                 height: SizeConfig.blockSizeVertical! * 0.5,
                               ),
                               Text(
-                                property.location.address,
+                                widget.property.location.address,
                                 style: kRalewayRegular.copyWith(
                                   color: kWhite,
                                   fontSize: SizeConfig.blockSizeHorizontal! * 3,
@@ -197,7 +220,7 @@ class PropertyDetail extends StatelessWidget {
                                             2.5,
                                       ),
                                       Text(
-                                        '${property.bedroom} Bedroom',
+                                        '${widget.property.bedroom} Bedroom',
                                         style: kRalewayRegular.copyWith(
                                           color: kWhite,
                                           fontSize:
@@ -235,7 +258,7 @@ class PropertyDetail extends StatelessWidget {
                                             2.5,
                                       ),
                                       Text(
-                                        '${property.bathroom} Bathroom',
+                                        '${widget.property.bathroom} Bathroom',
                                         style: kRalewayRegular.copyWith(
                                           color: kWhite,
                                           fontSize:
@@ -273,7 +296,7 @@ class PropertyDetail extends StatelessWidget {
                 height: kPadding24,
               ),
               ReadMoreText(
-                property.description,
+                widget.property.description,
                 trimLines: 2,
                 trimMode: TrimMode.Line,
                 delimiter: '...',
@@ -300,26 +323,26 @@ class PropertyDetail extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      // CircleAvatar(
-                      //   radius: 20,
-                      //   backgroundImage: NetworkImage(
-                      //     property.user.image,
-                      //   ),
-                      //   backgroundColor: kBlue,
-                      // ),
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundImage: NetworkImage(
+                          image,
+                        ),
+                        backgroundColor: kBlue,
+                      ),
                       SizedBox(
                         width: SizeConfig.blockSizeHorizontal! * 4,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Text(
-                          //   property.user.name,
-                          //   style: kRalewayMedium.copyWith(
-                          //     color: kBlack,
-                          //     fontSize: SizeConfig.blockSizeHorizontal! * 4,
-                          //   ),
-                          // ),
+                          Text(
+                            name,
+                            style: kRalewayMedium.copyWith(
+                              color: kBlack,
+                              fontSize: SizeConfig.blockSizeHorizontal! * 4,
+                            ),
+                          ),
                           SizedBox(
                             height: SizeConfig.blockSizeVertical! * 0.2,
                           ),
@@ -400,7 +423,7 @@ class PropertyDetail extends StatelessWidget {
                       image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                          property.images[index],
+                          widget.property.images[index],
                         ),
                       ),
                     ),
@@ -412,7 +435,7 @@ class PropertyDetail extends StatelessWidget {
                       child: Center(
                         child: index == 4 - 1
                             ? Text(
-                                '+${property.images.length - 3}',
+                                '+${widget.property.images.length - 3}',
                                 style: kRalewayMedium.copyWith(
                                   color: kWhite,
                                   fontSize: SizeConfig.blockSizeHorizontal! * 5,
@@ -431,11 +454,9 @@ class PropertyDetail extends StatelessWidget {
                 height: 161,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(kBorderRadius20),
-                  image: const DecorationImage(
+                  image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage(
-                      'assets/icons/map_sample.png',
-                    ),
+                    image: NetworkImage(mapImageLink),
                   ),
                 ),
                 child: Stack(

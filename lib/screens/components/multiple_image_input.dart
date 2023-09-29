@@ -1,23 +1,23 @@
-import 'dart:io';
-
 import 'package:estateease/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MultipleImageSelector extends StatefulWidget {
-  const MultipleImageSelector({super.key, required this.setImageList});
-  final void Function(List<XFile> imageList) setImageList;
+  MultipleImageSelector(
+      {super.key, required this.setImageList, this.imageAdded});
+  final void Function(List<XFile> imageList, bool? isImageUpdated) setImageList;
+  int? imageAdded;
   @override
   State<MultipleImageSelector> createState() => _MultipleImageSelectorState();
 }
 
 class _MultipleImageSelectorState extends State<MultipleImageSelector> {
   final ImagePicker imagePicker = ImagePicker();
+
   List<XFile> imageFileList = [];
   void selectImages() async {
     imageFileList = await imagePicker.pickMultiImage();
-    widget.setImageList(imageFileList);
-
+    widget.setImageList(imageFileList, true);
     setState(() {});
   }
 
@@ -48,7 +48,9 @@ class _MultipleImageSelectorState extends State<MultipleImageSelector> {
               ),
               label: Text(
                 imageFileList.isEmpty
-                    ? 'Add Property Picture'
+                    ? (widget.imageAdded != null)
+                        ? '${widget.imageAdded} Images are selected'
+                        : 'Add Property Picture'
                     : "${imageFileList.length} Images are selected",
                 style: kRalewayMedium.copyWith(color: kBlue),
               ),

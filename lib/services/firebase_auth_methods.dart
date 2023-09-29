@@ -11,7 +11,7 @@ class FirebaseAuthMethods {
 
   final FireStoreMethods fireStoreMethods = FireStoreMethods();
   FirebaseAuth auth = FirebaseAuth.instance;
-
+  
   FirebaseAuthMethods(this._auth);
   User? user;
   //Email SignUp
@@ -20,6 +20,7 @@ class FirebaseAuthMethods {
     required String password,
     required String name,
     required String image,
+    required String phone,
     required BuildContext context,
   }) async {
     EasyLoading.show();
@@ -38,6 +39,7 @@ class FirebaseAuthMethods {
         image: image,
         name: name,
         eMail: email,
+        phone: phone,
       );
       EasyLoading.dismiss();
     } on FirebaseAuthException catch (e) {

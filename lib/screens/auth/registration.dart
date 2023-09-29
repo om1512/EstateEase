@@ -9,7 +9,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
-import 'package:estateease/models/Users.dart' as MyUser;
 
 class Registration extends StatefulWidget {
   const Registration({
@@ -32,7 +31,7 @@ class _RegistrationState extends State<Registration> {
   TextEditingController nameController = TextEditingController();
   bool otpVisibility = false;
   TextEditingController otpController = TextEditingController();
-
+  TextEditingController phoneController = TextEditingController();
   Widget suffixIcon = const Icon(
     Icons.sim_card_alert,
     color: Colors.red,
@@ -145,6 +144,42 @@ class _RegistrationState extends State<Registration> {
                                 .copyWith(color: myColor),
                             decoration: InputDecoration(
                               label: Text("Name"),
+                              labelStyle: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(
+                                      color:
+                                          Color.fromARGB(255, 176, 175, 175)),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 176, 175, 175)),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 87, 87, 87)),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 176, 175, 175)),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
+                            controller: phoneController,
+                            keyboardType: TextInputType.phone,
+                            cursorColor: myColor,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(color: myColor),
+                            decoration: InputDecoration(
+                              label: Text("Phone"),
                               labelStyle: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
@@ -420,6 +455,7 @@ class _RegistrationState extends State<Registration> {
         name: nameController.text,
         email: emailController.text,
         password: passwordController.text,
+        phone: phoneController.text,
         context: context,
       );
     } else {

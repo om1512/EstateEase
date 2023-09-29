@@ -1,4 +1,3 @@
-import 'package:estateease/models/Users.dart' as User;
 import 'package:estateease/models/place.dart';
 
 class RentProperty {

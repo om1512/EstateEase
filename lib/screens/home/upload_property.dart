@@ -11,6 +11,7 @@ import 'package:estateease/utils/showSnackBar.dart';
 import 'package:estateease/utils/size_config.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:uuid/uuid.dart';
@@ -43,7 +44,7 @@ class _UploadPropertyState extends State<UploadProperty> {
   String per = "month";
   PlaceLocation? _selectedLocation;
   AbsoluteAddress? absoluteAddress;
-  // const CurrentUserData =
+  bool isUpdated = false;
   void loc() async {
     Location location = new Location();
     bool _serviceEnabled;
@@ -321,9 +322,8 @@ class _UploadPropertyState extends State<UploadProperty> {
                 height: 10,
               ),
               MultipleImageSelector(
-                setImageList: (imageList) {
+                setImageList: (imageList, isUpdated) {
                   this.imageList = imageList;
-                  print(this.imageList);
                 },
               ),
               SizedBox(
@@ -352,7 +352,7 @@ class _UploadPropertyState extends State<UploadProperty> {
                 height: 20,
               ),
               LocationInput(
-                onSelectLocation: (location, address) {
+                onSelectLocation: (location, address,status) {
                   _selectedLocation = location;
                   absoluteAddress = address;
                   setState(() {
@@ -531,7 +531,7 @@ class _UploadPropertyState extends State<UploadProperty> {
     );
   }
 
-  void _saveData() {
+  void _saveData() async {
     String propertyId = const Uuid().v4();
     String userId = FirebaseAuth.instance.currentUser!.uid;
 
@@ -564,13 +564,21 @@ class _UploadPropertyState extends State<UploadProperty> {
           balcony: "1",
           price: rentAmount.text,
           per: per,
-          thumbnail: _selectedImage,
+          thumbnail: "",
           images: [],
           location: _selectedLocation!,
           absoluteAddress: absoluteAddress!,
           userId: userId);
+      EasyLoading.show();
+      List<String> data = await Storage().uploadFiles(propertyId, imageList);
+      property.images = data;
+
+      String thumbnail =
+          await Storage().uploadSingleFile(propertyId, _selectedImage);
+      property.thumbnail = thumbnail;
       FireStoreMethods().addProperty(
           context, userId, property, imageList, widget.propertyType);
+      EasyLoading.dismiss();
       _dialogBuilder(context);
     } else {
       showSnackBar(context, "Please Fill All The Details");
