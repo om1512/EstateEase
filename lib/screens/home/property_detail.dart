@@ -1,21 +1,25 @@
 import 'package:estateease/models/RentProperty.dart';
+import 'package:estateease/provider/currentLocationProvider.dart';
+import 'package:estateease/screens/components/map_for_route.dart';
 import 'package:estateease/services/firestore_methods.dart';
 import 'package:estateease/services/location_config.dart';
 import 'package:flutter/material.dart';
 import 'package:estateease/utils/app_styles.dart';
 import 'package:estateease/utils/size_config.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:readmore/readmore.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
-class PropertyDetail extends StatefulWidget {
+class PropertyDetail extends ConsumerStatefulWidget {
   PropertyDetail({Key? key, required this.property}) : super(key: key);
   final RentProperty property;
 
   @override
-  State<PropertyDetail> createState() => _PropertyDetailState();
+  ConsumerState<PropertyDetail> createState() => _PropertyDetailState();
 }
 
-class _PropertyDetailState extends State<PropertyDetail> {
+class _PropertyDetailState extends ConsumerState<PropertyDetail> {
   final FireStoreMethods fireStoreMethods = FireStoreMethods();
 
   String image = "";
@@ -38,68 +42,72 @@ class _PropertyDetailState extends State<PropertyDetail> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
+        decoration: BoxDecoration(color: kWhite),
         padding: const EdgeInsets.symmetric(
           horizontal: kPadding8,
         ),
-        height: 43,
+        height: 60,
         width: double.infinity,
         margin: const EdgeInsets.symmetric(
           horizontal: kPadding20,
         ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Price',
-                    style: kRalewayRegular.copyWith(
-                      color: kGrey85,
-                      fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Price',
+                      style: kRalewayRegular.copyWith(
+                        color: kGrey85,
+                        fontSize: SizeConfig.blockSizeHorizontal! * 2.5,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.blockSizeVertical! * 0.5,
-                  ),
-                  Text(
-                    '${widget.property.price} / ${widget.property.per}',
-                    style: kRalewayMedium.copyWith(
-                      color: kBlack,
-                      fontSize: SizeConfig.blockSizeHorizontal! * 4,
+                    SizedBox(
+                      height: SizeConfig.blockSizeVertical! * 0.5,
                     ),
-                  )
-                ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                debugPrint('Rent Now Tapped');
-              },
-              child: Container(
-                height: 43,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    kBorderRadius10,
-                  ),
-                  gradient: kLinearGradientBlue,
-                ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: kPadding24,
-                ),
-                child: Center(
-                  child: Text(
-                    'Rent Now',
-                    style: kRalewaySemibold.copyWith(
-                      color: kWhite,
-                      fontSize: SizeConfig.blockSizeHorizontal! * 4,
-                    ),
-                  ),
+                    Text(
+                      '${widget.property.price} / ${widget.property.per}',
+                      style: kRalewayMedium.copyWith(
+                        color: kBlack,
+                        fontSize: SizeConfig.blockSizeHorizontal! * 4,
+                      ),
+                    )
+                  ],
                 ),
               ),
-            )
-          ],
+              GestureDetector(
+                onTap: () {
+                  debugPrint('Rent Now Tapped');
+                },
+                child: Container(
+                  height: 43,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      kBorderRadius10,
+                    ),
+                    gradient: kLinearGradientBlue,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: kPadding24,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Rent Now',
+                      style: kRalewaySemibold.copyWith(
+                        color: kWhite,
+                        fontSize: SizeConfig.blockSizeHorizontal! * 4,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
       body: SafeArea(
@@ -416,32 +424,74 @@ class _PropertyDetailState extends State<PropertyDetail> {
                 ),
                 itemCount: 4,
                 itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(kBorderRadius10),
-                      color: kBlue,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                          widget.property.images[index],
-                        ),
-                      ),
-                    ),
+                  return GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0)),
+                              backgroundColor: Colors.black.withOpacity(0.5),
+                              child: Container(
+                                padding: EdgeInsets.all(10.0),
+                                child: CarouselSlider.builder(
+                                  itemCount: widget.property.images.length,
+                                  itemBuilder: (context, index, realIndex) {
+                                    return Image(
+                                      image: NetworkImage(
+                                          widget.property.images[index]),
+                                      fit: BoxFit.fill,
+                                      width: double.infinity,
+                                    );
+                                  },
+                                  options: CarouselOptions(
+                                    autoPlay: true,
+                                    enlargeCenterPage: true,
+                                    viewportFraction: 0.9,
+                                    aspectRatio: 1.0,
+                                    initialPage: 0,
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+                    },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: index == 4 - 1 ? kBlack.withOpacity(0.3) : null,
                         borderRadius: BorderRadius.circular(kBorderRadius10),
-                      ),
-                      child: Center(
-                        child: index == 4 - 1
-                            ? Text(
-                                '+${widget.property.images.length - 3}',
-                                style: kRalewayMedium.copyWith(
-                                  color: kWhite,
-                                  fontSize: SizeConfig.blockSizeHorizontal! * 5,
+                        color: kBlue,
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: (index < widget.property.images.length)
+                              ? NetworkImage(
+                                  widget.property.images[index],
+                                )
+                              : NetworkImage(
+                                  "https://www.svgrepo.com/show/508699/landscape-placeholder.svg",
                                 ),
-                              )
-                            : null,
+                        ),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color:
+                              index == 4 - 1 ? kBlack.withOpacity(0.3) : null,
+                          borderRadius: BorderRadius.circular(kBorderRadius10),
+                        ),
+                        child: Center(
+                          child: (index < widget.property.images.length)
+                              ? index == 4 - 1
+                                  ? Text(
+                                      '+${widget.property.images.length - 3}',
+                                      style: kRalewayMedium.copyWith(
+                                        color: kWhite,
+                                        fontSize:
+                                            SizeConfig.blockSizeHorizontal! * 5,
+                                      ),
+                                    )
+                                  : null
+                              : null,
+                        ),
                       ),
                     ),
                   );
@@ -450,31 +500,28 @@ class _PropertyDetailState extends State<PropertyDetail> {
               const SizedBox(
                 height: kPadding24,
               ),
-              Container(
-                height: 161,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(kBorderRadius20),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(mapImageLink),
-                  ),
-                ),
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 136,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(kBorderRadius20),
-                            bottomRight: Radius.circular(kBorderRadius20),
-                          ),
-                          gradient: kLinearGradientWhite,
-                        ),
-                      ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) {
+                      return MapForRoute(
+                        startLat: ref.read(currentLocation).latitude,
+                        startLng: ref.read(currentLocation).longitude,
+                        endLat: widget.property.location.latitude,
+                        endLng: widget.property.location.longitude,
+                      );
+                    },
+                  ));
+                },
+                child: Container(
+                  height: 161,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(kBorderRadius20),
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(mapImageLink),
                     ),
-                  ],
+                  ),
                 ),
               ),
               const SizedBox(
