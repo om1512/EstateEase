@@ -1,31 +1,30 @@
-import 'dart:convert';
-
+import 'package:estateease/provider/currentLocationProvider.dart';
+import 'package:estateease/provider/userPlaceProvider.dart';
+import 'package:estateease/screens/components/location_picker.dart';
 import 'package:estateease/screens/home/home_content.dart';
 import 'package:estateease/screens/home/my_properties.dart';
 import 'package:estateease/screens/home/property_types.dart';
 import 'package:estateease/utils/app_styles.dart';
+import 'package:estateease/utils/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 import 'package:location/location.dart';
 
-import 'package:http/http.dart' as http;
-
-class MainScreen extends StatefulWidget {
+class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  ConsumerState<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends ConsumerState<MainScreen> {
   List<ScreenHiddenDrawer> pages = [];
-  bool? isLocationEnabled;
-  String city = "";
-  bool? isPermissionGranted;
-  Location location = Location();
   double? lat;
-  double? long;
+  double? lng;
   void _getCurrentLocation() async {
+    Location location = Location();
+
     bool serviceEnabled;
     PermissionStatus permissionGranted;
     LocationData locationData;
@@ -47,26 +46,22 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     locationData = await location.getLocation();
-    lat = locationData.latitude;
-    long = locationData.longitude;
+    setState(() {
+      lat = locationData.latitude;
+      lng = locationData.longitude;
+    });
 
-    if (lat == null || long == null) {
+    if (lat == null || lng == null) {
       return;
-    } else {
-      final url = Uri.parse(
-          'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$long&key=AIzaSyAr1dn7Gm4qQzKjgqocTqTCya1g8CKp7ZY');
-      final response = await http.get(url);
-      final resData = json.decode(response.body);
-      setState(() {
-        city = resData['results'][0]['address_components'][2]["long_name"];
-      });
     }
   }
 
+  String? country;
+  String? state;
+  String? city;
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
     pages = [
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -97,6 +92,15 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    country = ref.watch(userPlace).country;
+    city = ref.watch(userPlace).city;
+    state = ref.watch(userPlace).state;
+    _getCurrentLocation();
+    if (lat != null && lng != null) {
+      ref.read(currentLocation).latitude = lat!;
+      ref.read(currentLocation).longitude = lng!;
+    }
+
     return HiddenDrawerMenu(
       screens: pages,
       backgroundColorMenu: kBlue.withOpacity(0.2),
@@ -115,20 +119,58 @@ class _MainScreenState extends State<MainScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    city,
-                    style: kRalewayMedium.copyWith(
-                      color: kWhite,
-                      fontSize: 23,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 3,
-                  ),
-                  Text(
-                    '•',
-                    style: TextStyle(color: Colors.green),
-                  ),
+                  (country != null && city != null && state != null)
+                      ? GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return LocationPicker(
+                                  onSelectLocation: () {
+                                    setState(() {});
+                                  },
+                                );
+                              },
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    state!,
+                                    style: kRalewayRegular.copyWith(
+                                        color: kGrey,
+                                        fontSize:
+                                            SizeConfig.blockSizeHorizontal! *
+                                                4),
+                                  ),
+                                  Text(city!)
+                                ],
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              const Icon(Icons.location_on)
+                            ],
+                          ),
+                        )
+                      : IconButton(
+                          icon: const Icon(Icons.location_on),
+                          onPressed: () async {
+                            await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return LocationPicker(
+                                  onSelectLocation: () {
+                                    setState(() {});
+                                  },
+                                );
+                              },
+                            );
+                          },
+                        ),
                 ],
               ),
             ],

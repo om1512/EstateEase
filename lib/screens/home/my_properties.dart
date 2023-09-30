@@ -34,8 +34,7 @@ class _MyPropertiesState extends State<MyProperties> {
       setState(() {
         list = value[0];
         property = value[1];
-        
-        print("${list.length} ////// ${property.length}");
+
       });
     });
 

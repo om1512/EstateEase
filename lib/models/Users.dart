@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 User userFromJson(String str) => User.fromJson(json.decode(str));
 
 String userToJson(User data) => json.encode(data.toJson());
@@ -33,6 +35,12 @@ class User {
         "phone": phone,
         "myProperties": List<dynamic>.from(myProperties.map((x) => x.toJson())),
       };
+}
+
+class CurrentLocation {
+  CurrentLocation({required this.latitude, required this.longitude});
+  double latitude;
+  double longitude;
 }
 
 class MyProperty {

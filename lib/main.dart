@@ -1,9 +1,9 @@
 import 'package:estateease/firebase_options.dart';
-import 'package:estateease/screens/auth/registration.dart';
 import 'package:estateease/screens/start/splace_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
   final colorScheme = ColorScheme.fromSeed(
@@ -20,12 +20,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(
-    MaterialApp(
+  runApp(ProviderScope(
+    child: MaterialApp(
       theme: theme,
       debugShowCheckedModeBanner: false,
       home: SplaceScreen(),
       builder: EasyLoading.init(),
     ),
-  );
+  ));
 }

@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:estateease/models/RentProperty.dart';
 import 'package:estateease/screens/start/main_screen.dart';
 import 'package:estateease/services/firebase_storage.dart';
-import 'package:estateease/utils/showSnackBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -137,21 +136,11 @@ class FireStoreMethods {
         );
       }
     }
-    FirebaseStorage.instance.ref().child("Property/${property.id}").delete();
-
+    FirebaseStorage.instance.ref("Property/").child(property.id).delete();
     print("Property deleted");
   }
 
-  Stream<List<RentProperty>> getRentPropertyList() {
-    return _fireStoreDataBase
-        .collection("Properties")
-        .doc("Everyone")
-        .collection("Apartment")
-        .snapshots()
-        .map((snapShot) => snapShot.docs
-            .map((document) => RentProperty.fromJson(document.data()))
-            .toList());
-  }
+  
 
   Future<RentProperty> getRentPropertyById(
       String id, String type, String category) async {
@@ -163,6 +152,9 @@ class FireStoreMethods {
         .get();
     return RentProperty.fromJson(data.data() as Map<String, dynamic>);
   }
+
+
+  
 
   Future<List<dynamic>> getUserProperty(String userId) async {
     MyUser.User userData = await getUserData(userId);
