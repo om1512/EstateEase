@@ -272,9 +272,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => PropertyDetail(
-                                              property: RentProperty.fromJson(
-                                                  property.data()
-                                                      as Map<String, dynamic>)),
+                                            property: RentProperty.fromJson(
+                                                property.data()
+                                                    as Map<String, dynamic>),
+                                          ),
                                         ),
                                       )),
                                   child: Container(
@@ -547,7 +548,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                               ),
                                               Text(
                                                 '${property["price"]} / ${property["per"]}',
-                                                style: kRalewayMedium.copyWith(
+                                                style: GoogleFonts.poppins(
                                                   color: kBlue,
                                                   fontSize: SizeConfig
                                                           .blockSizeHorizontal! *

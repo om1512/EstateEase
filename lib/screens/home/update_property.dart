@@ -578,19 +578,21 @@ class _UpdatePropertyState extends State<UpdateProperty> {
           postalZip: postalZip.text,
           country: country.text);
       RentProperty property = RentProperty(
-          id: widget.property.id,
-          name: name.text,
-          description: description.text,
-          bedroom: bedroom.text,
-          bathroom: bathroom.text,
-          balcony: "1",
-          price: rentAmount.text,
-          per: per,
-          thumbnail: widget.property.thumbnail,
-          images: widget.property.images,
-          location: widget.property.location,
-          absoluteAddress: absoluteAddress!,
-          userId: userId);
+        id: widget.property.id,
+        name: name.text,
+        description: description.text,
+        bedroom: bedroom.text,
+        bathroom: bathroom.text,
+        balcony: "1",
+        price: rentAmount.text,
+        per: per,
+        thumbnail: widget.property.thumbnail,
+        images: widget.property.images,
+        location: widget.property.location,
+        absoluteAddress: absoluteAddress!,
+        userId: userId,
+        reports: [],
+      );
 
       if (isLocationSelected) {
         property.location = _selectedLocation!;

@@ -15,6 +15,7 @@ class RentProperty {
   PlaceLocation location;
   AbsoluteAddress absoluteAddress;
   String userId;
+  List<UserReport> reports;
 
   RentProperty({
     required this.id,
@@ -30,6 +31,7 @@ class RentProperty {
     required this.location,
     required this.absoluteAddress,
     required this.userId,
+    required this.reports,
   });
 
   factory RentProperty.fromJson(Map<String, dynamic> json) => RentProperty(
@@ -46,6 +48,8 @@ class RentProperty {
         location: PlaceLocation.fromJson(json["location"]),
         absoluteAddress: AbsoluteAddress.fromJson(json["absoluteAddress"]),
         userId: json["userId"],
+        reports: List<UserReport>.from(
+            json["reports"].map((x) => UserReport.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -62,5 +66,30 @@ class RentProperty {
         "location": location.toJson(),
         "absoluteAddress": absoluteAddress.toJson(),
         "userId": userId,
+        "reports": List<dynamic>.from(reports.map((x) => x)),
+      };
+}
+
+class UserReport {
+  String userId;
+  String message;
+  String type;
+
+  UserReport({
+    required this.userId,
+    required this.message,
+    required this.type,
+  });
+
+  factory UserReport.fromJson(Map<String, dynamic> json) => UserReport(
+        userId: json["userId"],
+        message: json["message"],
+        type: json["type"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "userId": userId,
+        "message": message,
+        "type": type,
       };
 }

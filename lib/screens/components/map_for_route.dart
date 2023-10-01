@@ -1,8 +1,10 @@
 import 'dart:math';
 import 'package:estateease/utils/app_styles.dart';
+import 'package:estateease/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapForRoute extends ConsumerStatefulWidget {
@@ -128,38 +130,59 @@ class _MapForRouteState extends ConsumerState<MapForRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(children: [
-      GoogleMap(
-        zoomGesturesEnabled: true, 
-        initialCameraPosition: CameraPosition(
-          
-          target: startLocation!, 
-          zoom: 14.0, 
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Container(
+          decoration: BoxDecoration(color: kWhite),
+          padding: const EdgeInsets.symmetric(
+            horizontal: kPadding8,
+          ),
+          height: 60,
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(
+            horizontal: kPadding20,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Total Distance: " +
+                            distance.toStringAsFixed(2) +
+                            " KM",
+                        style: GoogleFonts.poppins(
+                          color: kBlack,
+                          fontSize: SizeConfig.blockSizeHorizontal! * 5,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-        markers: markers, //markers to show on map
-        polylines: Set<Polyline>.of(polylines.values), //polylines
-        mapType: MapType.normal, //map type
-        onMapCreated: (controller) {
-          //method called when map is created
-          setState(() {
-            mapController = controller;
-          });
-        },
-      ),
-      Positioned(
-          bottom: 200,
-          left: 50,
-          child: Container(
-              child: Card(
-            child: Container(
-                padding: EdgeInsets.all(20),
-                child: Text(
-                    "Total Distance: " + distance.toStringAsFixed(2) + " KM",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: kWhite))),
-          )))
-    ]));
+        body: Stack(children: [
+          GoogleMap(
+            zoomGesturesEnabled: true,
+            initialCameraPosition: CameraPosition(
+              target: startLocation!,
+              zoom: 14.0,
+            ),
+            markers: markers, //markers to show on map
+            polylines: Set<Polyline>.of(polylines.values), //polylines
+            mapType: MapType.normal, //map type
+            onMapCreated: (controller) {
+              //method called when map is created
+              setState(() {
+                mapController = controller;
+              });
+            },
+          ),
+        ]));
   }
 }

@@ -10,32 +10,46 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:readmore/readmore.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PropertyDetail extends ConsumerStatefulWidget {
-  PropertyDetail({Key? key, required this.property}) : super(key: key);
+  const PropertyDetail({Key? key, required this.property}) : super(key: key);
   final RentProperty property;
-
   @override
   ConsumerState<PropertyDetail> createState() => _PropertyDetailState();
 }
 
 class _PropertyDetailState extends ConsumerState<PropertyDetail> {
   final FireStoreMethods fireStoreMethods = FireStoreMethods();
-
   String image = "";
   String name = "";
+  String phone = "";
   String mapImageLink = "";
+  bool propertyBookmarked = false;
+
   @override
-  Widget build(BuildContext context) {
-    SizeConfig().init(context);
+  void initState() {
+    super.initState();
     fireStoreMethods.getUserData(widget.property.userId).then(
       (value) {
         setState(() {
           image = value.image;
           name = value.name;
+          phone = value.phone;
         });
       },
     );
+    fireStoreMethods.isPropertyBookMarked(widget.property.id).then((value) {
+      setState(() {
+        propertyBookmarked = value;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     mapImageLink = LocationHelper.generateLocationPreviewImage(
         lat: widget.property.location.latitude,
         lng: widget.property.location.longitude);
@@ -162,18 +176,46 @@ class _PropertyDetailState extends ConsumerState<PropertyDetail> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              CircleAvatar(
-                                radius: 17,
-                                backgroundColor: kBlack.withOpacity(0.24),
-                                child: SvgPicture.asset(
-                                  'assets/icons/icon_arrow_back.svg',
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: CircleAvatar(
+                                  radius: 17,
+                                  backgroundColor: kBlack.withOpacity(0.24),
+                                  child: SvgPicture.asset(
+                                    'assets/icons/icon_arrow_back.svg',
+                                  ),
                                 ),
                               ),
                               CircleAvatar(
                                 radius: 17,
                                 backgroundColor: kBlack.withOpacity(0.24),
-                                child: SvgPicture.asset(
-                                  'assets/icons/icon_bookmark.svg',
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.bookmark,
+                                    size: 17,
+                                    color:
+                                        (propertyBookmarked) ? kBlue : kWhite,
+                                  ),
+                                  onPressed: () {
+                                    if (!propertyBookmarked) {
+                                      fireStoreMethods.addPropertyToFavorite(
+                                          widget.property);
+                                      setState(() {
+                                        propertyBookmarked =
+                                            !propertyBookmarked;
+                                      });
+                                    } else {
+                                      fireStoreMethods
+                                          .removePropertyFromFavorite(
+                                              widget.property.id);
+                                      setState(() {
+                                        propertyBookmarked =
+                                            !propertyBookmarked;
+                                      });
+                                    }
+                                  },
                                 ),
                               ),
                             ],
@@ -367,15 +409,20 @@ class _PropertyDetailState extends ConsumerState<PropertyDetail> {
                   ),
                   Row(
                     children: [
-                      Container(
-                        height: 28,
-                        width: 28,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(kBorderRadius5),
-                          color: kBlue.withOpacity(0.5),
-                        ),
-                        child: SvgPicture.asset(
-                          'assets/icons/icon_phone.svg',
+                      GestureDetector(
+                        onTap: () async {
+                          launch("tel:+91$phone");
+                        },
+                        child: Container(
+                          height: 28,
+                          width: 28,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(kBorderRadius5),
+                            color: kBlue.withOpacity(0.5),
+                          ),
+                          child: SvgPicture.asset(
+                            'assets/icons/icon_phone.svg',
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -526,6 +573,67 @@ class _PropertyDetailState extends ConsumerState<PropertyDetail> {
               ),
               const SizedBox(
                 height: kPadding24,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Reviews',
+                    style: kRalewayMedium.copyWith(
+                      color: kBlack,
+                      fontSize: SizeConfig.blockSizeHorizontal! * 4,
+                    ),
+                  ),
+                  Spacer(),
+                  Container(
+                    height: 28,
+                    width: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(kBorderRadius5),
+                      color: kBlue.withOpacity(0.5),
+                    ),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Icon(
+                          Icons.add,
+                          color: kWhite,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Add Review",
+                          style: kRalewayMedium.copyWith(color: kWhite),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: kPadding24,
+              ),
+              Container(
+                child: (widget.property.reports.isEmpty)
+                    ? Container(
+                        height: 80,
+                        width: SizeConfig.screenHeight,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: kGrey),
+                            borderRadius:
+                                BorderRadius.circular(kBorderRadius10)),
+                        child: Center(
+                            child: Text(
+                          "No Reviews",
+                          style: kRalewayMedium,
+                        )),
+                      )
+                    : null,
+              ),
+              const SizedBox(
+                height: kPadding32,
               ),
             ],
           ),

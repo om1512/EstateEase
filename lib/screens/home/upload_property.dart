@@ -352,7 +352,7 @@ class _UploadPropertyState extends State<UploadProperty> {
                 height: 20,
               ),
               LocationInput(
-                onSelectLocation: (location, address,status) {
+                onSelectLocation: (location, address, status) {
                   _selectedLocation = location;
                   absoluteAddress = address;
                   setState(() {
@@ -556,19 +556,21 @@ class _UploadPropertyState extends State<UploadProperty> {
           postalZip: postalZip.text,
           country: country.text);
       RentProperty property = RentProperty(
-          id: propertyId,
-          name: name.text,
-          description: description.text,
-          bedroom: bedroom.text,
-          bathroom: bathroom.text,
-          balcony: "1",
-          price: rentAmount.text,
-          per: per,
-          thumbnail: "",
-          images: [],
-          location: _selectedLocation!,
-          absoluteAddress: absoluteAddress!,
-          userId: userId);
+        id: propertyId,
+        name: name.text,
+        description: description.text,
+        bedroom: bedroom.text,
+        bathroom: bathroom.text,
+        balcony: "1",
+        price: rentAmount.text,
+        per: per,
+        thumbnail: "",
+        images: [],
+        location: _selectedLocation!,
+        absoluteAddress: absoluteAddress!,
+        userId: userId,
+        reports: [],
+      );
       EasyLoading.show();
       List<String> data = await Storage().uploadFiles(propertyId, imageList);
       property.images = data;

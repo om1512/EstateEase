@@ -28,6 +28,23 @@ class Storage extends StatelessWidget {
     return "";
   }
 
+  Future<String> uploadSingleFileForUser(
+    String fileId,
+    String filePath,
+  ) async {
+    File file = File(filePath);
+    final storageRef = FirebaseStorage.instance.ref();
+    final Reference fileRef = storageRef.child("Users/${fileId}");
+    try {
+      await fileRef.putFile(file);
+      String url = await fileRef.getDownloadURL();
+      return url;
+    } catch (e) {
+      print('Error uploading image');
+    }
+    return "";
+  }
+
   
 
   Future<List<String>> uploadFiles(

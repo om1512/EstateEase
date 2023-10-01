@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-
 User userFromJson(String str) => User.fromJson(json.decode(str));
 
 String userToJson(User data) => json.encode(data.toJson());
@@ -12,21 +10,25 @@ class User {
   String email;
   String phone;
   List<MyProperty> myProperties;
-  User(
-      {required this.image,
-      required this.name,
-      required this.email,
-      required this.phone,
-      required this.myProperties});
+  List<MyProperty> favorite;
+  User({
+    required this.image,
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.myProperties,
+    required this.favorite,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        image: json["image"],
-        name: json["name"],
-        email: json["email"],
-        phone: json["phone"],
-        myProperties: List<MyProperty>.from(
-            json["myProperties"].map((x) => MyProperty.fromJson(x))),
-      );
+      image: json["image"],
+      name: json["name"],
+      email: json["email"],
+      phone: json["phone"],
+      myProperties: List<MyProperty>.from(
+          json["myProperties"].map((x) => MyProperty.fromJson(x))),
+      favorite: List<MyProperty>.from(
+          json["favorite"].map((x) => MyProperty.fromJson(x))));
 
   Map<String, dynamic> toJson() => {
         "image": image,
@@ -34,6 +36,7 @@ class User {
         "email": email,
         "phone": phone,
         "myProperties": List<dynamic>.from(myProperties.map((x) => x.toJson())),
+        "favorite": List<dynamic>.from(favorite.map((x) => x.toJson())),
       };
 }
 

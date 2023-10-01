@@ -1,6 +1,7 @@
 import 'package:estateease/provider/currentLocationProvider.dart';
 import 'package:estateease/provider/userPlaceProvider.dart';
 import 'package:estateease/screens/components/location_picker.dart';
+import 'package:estateease/screens/home/bookmark_property.dart';
 import 'package:estateease/screens/home/home_content.dart';
 import 'package:estateease/screens/home/my_properties.dart';
 import 'package:estateease/screens/home/property_types.dart';
@@ -62,6 +63,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   @override
   void initState() {
     super.initState();
+
     pages = [
       ScreenHiddenDrawer(
         ItemHiddenMenu(
@@ -87,6 +89,14 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             selectedStyle: kRalewayMedium),
         const MyProperties(),
       ),
+      ScreenHiddenDrawer(
+        ItemHiddenMenu(
+            name: 'Bookmarked',
+            baseStyle: kRalewayMedium,
+            colorLineSelected: kBlue,
+            selectedStyle: kRalewayMedium),
+        const BookMarkScreen()  ,
+      ),
     ];
   }
 
@@ -100,7 +110,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       ref.read(currentLocation).latitude = lat!;
       ref.read(currentLocation).longitude = lng!;
     }
-
     return HiddenDrawerMenu(
       screens: pages,
       backgroundColorMenu: kBlue.withOpacity(0.2),
