@@ -1,6 +1,6 @@
 # estateease
 
-A new Flutter project.
+A new Flutter project Using Firebase. 
 
 ## Getting Started
 
