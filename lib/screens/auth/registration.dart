@@ -1,13 +1,13 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:estateease/screens/start/main_screen.dart';
 import 'package:estateease/services/firebase_auth_methods.dart';
 import 'package:estateease/services/firebase_storage.dart';
 import 'package:estateease/services/firestore_methods.dart';
+import 'package:estateease/utils/app_styles.dart';
 import 'package:estateease/utils/showSnackBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'package:image_picker/image_picker.dart';
 
 class Registration extends StatefulWidget {
@@ -23,7 +23,6 @@ class _RegistrationState extends State<Registration> {
   String selectedImagePath = '';
   bool _isVisible = false;
   final passwordController = TextEditingController();
-
   final Storage storage = Storage();
   final FireStoreMethods fireStoreMethods = FireStoreMethods();
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -143,26 +142,26 @@ class _RegistrationState extends State<Registration> {
                                 .titleMedium!
                                 .copyWith(color: myColor),
                             decoration: InputDecoration(
-                              label: Text("Name"),
+                              label: const Text("Name"),
                               labelStyle: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
                                   .copyWith(
-                                      color:
-                                          Color.fromARGB(255, 176, 175, 175)),
+                                      color: const Color.fromARGB(
+                                          255, 176, 175, 175)),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: Color.fromARGB(255, 176, 175, 175)),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: Color.fromARGB(255, 87, 87, 87)),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: Color.fromARGB(255, 176, 175, 175)),
                               ),
                             ),
@@ -265,29 +264,32 @@ class _RegistrationState extends State<Registration> {
                                   });
                                 },
                               ),
-                              label: Text("Password"),
+                              label: const Text("Password"),
                               labelStyle: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
                                   .copyWith(
-                                      color:
-                                          Color.fromARGB(255, 176, 175, 175)),
+                                      color: const Color.fromARGB(
+                                          255, 176, 175, 175)),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: Color.fromARGB(255, 176, 175, 175)),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: Color.fromARGB(255, 87, 87, 87)),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                     color: Color.fromARGB(255, 176, 175, 175)),
                               ),
                             ),
+                          ),
+                          const SizedBox(
+                            height: 10,
                           ),
                           const SizedBox(
                             height: 30,
@@ -341,6 +343,12 @@ class _RegistrationState extends State<Registration> {
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
+                    Center(
+                      child: Text(
+                        "Upload Addharcard",
+                        style: kRalewayBold.copyWith(fontSize: 12),
+                      ),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -355,28 +363,29 @@ class _RegistrationState extends State<Registration> {
                             }
                           },
                           child: Card(
-                              elevation: 5,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Column(
-                                  children: [
-                                    const Icon(
-                                      Icons.photo_size_select_actual,
-                                      color: Colors.white,
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Gallery',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .copyWith(color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              )),
+                            elevation: 5,
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  const Icon(
+                                    Icons.photo_size_select_actual,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    'Gallery',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
                         GestureDetector(
                           onTap: () async {
@@ -450,14 +459,23 @@ class _RegistrationState extends State<Registration> {
         nameController.text.isNotEmpty &&
         emailController.text.isNotEmpty &&
         passwordController.text.isNotEmpty) {
-      FirebaseAuthMethods(FirebaseAuth.instance).signUpWithEmail(
+      FirebaseAuthMethods(FirebaseAuth.instance)
+          .signUpWithEmail(
         image: selectedImagePath,
         name: nameController.text,
         email: emailController.text,
         password: passwordController.text,
         phone: phoneController.text,
         context: context,
-      );
+      )
+          .then((value) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MainScreen(),
+          ),
+        );
+      });
     } else {
       showSnackBar(context, "Please fill all the details");
     }

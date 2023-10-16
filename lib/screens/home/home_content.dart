@@ -100,69 +100,69 @@ class _HomePageState extends ConsumerState<HomePage> {
                       const SizedBox(
                         height: kPadding24,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: kPadding20,
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                style: kRalewayRegular.copyWith(
-                                  color: kBlack,
-                                  fontSize: SizeConfig.blockSizeHorizontal! * 3,
-                                ),
-                                controller: TextEditingController(),
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: kPadding16,
-                                  ),
-                                  prefixIcon: Padding(
-                                    padding: const EdgeInsets.all(
-                                      kPadding8,
-                                    ),
-                                    child: SvgPicture.asset(
-                                      'assets/icons/icon_search.svg',
-                                    ),
-                                  ),
-                                  hintText: 'Search address, or near you',
-                                  border: kInputBorder,
-                                  errorBorder: kInputBorder,
-                                  disabledBorder: kInputBorder,
-                                  focusedBorder: kInputBorder,
-                                  enabledBorder: kInputBorder,
-                                  hintStyle: kRalewayRegular.copyWith(
-                                    color: kGrey85,
-                                    fontSize:
-                                        SizeConfig.blockSizeHorizontal! * 3,
-                                  ),
-                                  filled: true,
-                                  fillColor: kWhiteF7,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: SizeConfig.blockSizeHorizontal! * 4,
-                            ),
-                            Container(
-                              height: 49,
-                              width: 49,
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(kBorderRadius10),
-                                gradient: kLinearGradientBlue,
-                              ),
-                              child: SvgPicture.asset(
-                                'assets/icons/icon_filter.svg',
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: kPadding24,
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(
+                      //     horizontal: kPadding20,
+                      //   ),
+                      //   child: Row(
+                      //     children: [
+                      //       Expanded(
+                      //         child: TextField(
+                      //           style: kRalewayRegular.copyWith(
+                      //             color: kBlack,
+                      //             fontSize: SizeConfig.blockSizeHorizontal! * 3,
+                      //           ),
+                      //           controller: TextEditingController(),
+                      //           decoration: InputDecoration(
+                      //             contentPadding: const EdgeInsets.symmetric(
+                      //               horizontal: kPadding16,
+                      //             ),
+                      //             prefixIcon: Padding(
+                      //               padding: const EdgeInsets.all(
+                      //                 kPadding8,
+                      //               ),
+                      //               child: SvgPicture.asset(
+                      //                 'assets/icons/icon_search.svg',
+                      //               ),
+                      //             ),
+                      //             hintText: 'Search address, or near you',
+                      //             border: kInputBorder,
+                      //             errorBorder: kInputBorder,
+                      //             disabledBorder: kInputBorder,
+                      //             focusedBorder: kInputBorder,
+                      //             enabledBorder: kInputBorder,
+                      //             hintStyle: kRalewayRegular.copyWith(
+                      //               color: kGrey85,
+                      //               fontSize:
+                      //                   SizeConfig.blockSizeHorizontal! * 3,
+                      //             ),
+                      //             filled: true,
+                      //             fillColor: kWhiteF7,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //       SizedBox(
+                      //         width: SizeConfig.blockSizeHorizontal! * 4,
+                      //       ),
+                      //       Container(
+                      //         height: 49,
+                      //         width: 49,
+                      //         padding: const EdgeInsets.all(12),
+                      //         decoration: BoxDecoration(
+                      //           borderRadius:
+                      //               BorderRadius.circular(kBorderRadius10),
+                      //           gradient: kLinearGradientBlue,
+                      //         ),
+                      //         child: SvgPicture.asset(
+                      //           'assets/icons/icon_filter.svg',
+                      //         ),
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
+                      // const SizedBox(
+                      //   height: kPadding24,
+                      // ),
                       SizedBox(
                         width: double.infinity,
                         height: 34,
@@ -213,7 +213,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                       color:
                                           current == index ? kWhite : kGrey85,
                                       fontSize:
-                                          SizeConfig.blockSizeHorizontal! * 2.5,
+                                          SizeConfig.blockSizeHorizontal! * 3.5,
                                     ),
                                   ),
                                 ),

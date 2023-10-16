@@ -376,7 +376,7 @@ class _PropertyDetailState extends ConsumerState<PropertyDetail> {
                       CircleAvatar(
                         radius: 20,
                         backgroundImage: NetworkImage(
-                          image,
+                          "https://cdn-icons-png.flaticon.com/512/3177/3177440.png",
                         ),
                         backgroundColor: kBlue,
                       ),

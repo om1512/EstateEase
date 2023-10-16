@@ -38,7 +38,7 @@ class _ImageInputstate extends State<ImageInput> {
                             _selectedImage = await selectImageFromGallery();
                             if (_selectedImage != '') {
                               Navigator.pop(context);
-                              widget.onTakeImage(_selectedImage!);
+                              widget.onTakeImage(_selectedImage);
                               setState(() {});
                             } else {
                               showSnackBar(context, "No Image Selected!");

@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 
 class FireStoreMethods {
   late String downloadURL;
+  late String aadharDownloadUrl;
   Storage storage = Storage();
   FirebaseFirestore _fireStoreDataBase = FirebaseFirestore.instance;
 
@@ -27,9 +28,10 @@ class FireStoreMethods {
   }) async {
     try {
       downloadURL = await storage.uploadSingleFileForUser(
-        userID,
+        "$userID/profilePicture",
         image,
       );
+
       EasyLoading.show(status: "Uploading data");
       CollectionReference users =
           FirebaseFirestore.instance.collection('Users');
@@ -42,12 +44,6 @@ class FireStoreMethods {
           favorite: []);
       await users.doc(userID).set(u.toJson(), SetOptions(merge: true));
       EasyLoading.showSuccess("Uploaded");
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MainScreen(),
-        ),
-      );
 
       return 'success';
     } on FirebaseException catch (e) {
@@ -240,7 +236,7 @@ class FireStoreMethods {
   }
 
   Future<void> addReportOnProperty(
-    RentProperty property, String message, String type) async {
+      RentProperty property, String message, String type) async {
     String userId = property.userId;
     UserReport report =
         UserReport(userId: userId, message: message, type: type);
@@ -261,5 +257,63 @@ class FireStoreMethods {
     }
   }
 
+  Future<List<Map<String, dynamic>>> getPropertiesData() async {
+    List<String> propertyTypes = [
+      "House",
+      "Apartment",
+      "Hotel",
+      "Villa",
+      "Cottage",
+    ];
+    List<Map<String, dynamic>> ans = [
+      {
+        "type": "Hostel",
+        "count": 100,
+      },
+      {
+        "type": "PG",
+        "count": 525,
+      },
+      {
+        "type": "Flat",
+        "count": 778,
+      },
+      {
+        "type": "Apartment",
+        "count": 778,
+      },
+      {
+        "type": "Hotel",
+        "count": 100,
+      },
+      {
+        "type": "Villa",
+        "count": 525,
+      },
+      {
+        "type": "Cottage",
+        "count": 778,
+      },
+    ];
+    // for (String s in propertyTypes) {
+    //   print("Type : " + s);
+    //   final QuerySnapshot qSnap = await FirebaseFirestore.instance
+    //       .collection("Properties")
+    //       .doc("Everyone")
+    //       .collection(s)
+    //       .get();
 
+    //   ans.add({
+    //     "type": s,
+    //     "count": qSnap.docs.length,
+    //   });
+    // }
+    return ans;
+  }
+
+  Future<int> getNumberOfUsers() async {
+    final QuerySnapshot qSnap =
+        await FirebaseFirestore.instance.collection("Users").get();
+    return qSnap.docs.length;
+  }
 }

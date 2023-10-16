@@ -34,7 +34,6 @@ class _MyPropertiesState extends State<MyProperties> {
       setState(() {
         list = value[0];
         property = value[1];
-
       });
     });
 
@@ -143,15 +142,7 @@ class _MyPropertiesState extends State<MyProperties> {
                                 ),
                               ),
                               SizedBox(
-                                height: SizeConfig.blockSizeVertical! * 0.5,
-                              ),
-                              Text(
-                                list[index].description,
-                                style: kRalewayMedium.copyWith(
-                                  color: kBlue,
-                                  fontSize:
-                                      SizeConfig.blockSizeHorizontal! * 2.5,
-                                ),
+                                height: SizeConfig.blockSizeVertical! * 1.5,
                               ),
                               Expanded(
                                   child: Row(

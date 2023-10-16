@@ -1,3 +1,4 @@
+import 'package:estateease/components/chart.dart';
 import 'package:estateease/provider/currentLocationProvider.dart';
 import 'package:estateease/provider/userPlaceProvider.dart';
 import 'package:estateease/screens/components/location_picker.dart';
@@ -12,6 +13,37 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 import 'package:location/location.dart';
 
+double lat = 0;
+double lng = 0;
+Future<void> _getCurrentLocation() async {
+  Location location = Location();
+
+  bool serviceEnabled;
+  PermissionStatus permissionGranted;
+  LocationData locationData;
+
+  serviceEnabled = await location.serviceEnabled();
+  if (!serviceEnabled) {
+    serviceEnabled = await location.requestService();
+    if (!serviceEnabled) {
+      return;
+    }
+  }
+
+  permissionGranted = await location.hasPermission();
+  if (permissionGranted == PermissionStatus.denied) {
+    permissionGranted = await location.requestPermission();
+    if (permissionGranted != PermissionStatus.granted) {
+      return;
+    }
+  }
+
+  locationData = await location.getLocation();
+
+  lat = locationData.latitude!;
+  lng = locationData.longitude!;
+}
+
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
 
@@ -21,41 +53,6 @@ class MainScreen extends ConsumerStatefulWidget {
 
 class _MainScreenState extends ConsumerState<MainScreen> {
   List<ScreenHiddenDrawer> pages = [];
-  double? lat;
-  double? lng;
-  void _getCurrentLocation() async {
-    Location location = Location();
-
-    bool serviceEnabled;
-    PermissionStatus permissionGranted;
-    LocationData locationData;
-
-    serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) {
-        return;
-      }
-    }
-
-    permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    locationData = await location.getLocation();
-    setState(() {
-      lat = locationData.latitude;
-      lng = locationData.longitude;
-    });
-
-    if (lat == null || lng == null) {
-      return;
-    }
-  }
 
   String? country;
   String? state;
@@ -95,7 +92,15 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             baseStyle: kRalewayMedium,
             colorLineSelected: kBlue,
             selectedStyle: kRalewayMedium),
-        const BookMarkScreen()  ,
+        const BookMarkScreen(),
+      ),
+      ScreenHiddenDrawer(
+        ItemHiddenMenu(
+            name: 'Data Analytics',
+            baseStyle: kRalewayMedium,
+            colorLineSelected: kBlue,
+            selectedStyle: kRalewayMedium),
+        Chart(),
       ),
     ];
   }
@@ -105,11 +110,11 @@ class _MainScreenState extends ConsumerState<MainScreen> {
     country = ref.watch(userPlace).country;
     city = ref.watch(userPlace).city;
     state = ref.watch(userPlace).state;
-    _getCurrentLocation();
-    if (lat != null && lng != null) {
-      ref.read(currentLocation).latitude = lat!;
-      ref.read(currentLocation).longitude = lng!;
-    }
+    _getCurrentLocation().then((value) {
+      ref.read(currentLocation).latitude = lat;
+      ref.read(currentLocation).longitude = lng;
+    });
+    SizeConfig().init(context);
     return HiddenDrawerMenu(
       screens: pages,
       backgroundColorMenu: kBlue.withOpacity(0.2),
@@ -167,8 +172,8 @@ class _MainScreenState extends ConsumerState<MainScreen> {
                         )
                       : IconButton(
                           icon: const Icon(Icons.location_on),
-                          onPressed: () async {
-                            await showDialog(
+                          onPressed: () {
+                            showDialog(
                               context: context,
                               builder: (context) {
                                 return LocationPicker(

@@ -1,5 +1,6 @@
 import 'package:estateease/firebase_options.dart';
 import 'package:estateease/screens/auth/registration.dart';
+
 import 'package:estateease/screens/start/splace_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ void main() async {
     child: MaterialApp(
       theme: theme,
       debugShowCheckedModeBanner: false,
-      home: SplaceScreen(),
+      home: const SplaceScreen(),
       builder: EasyLoading.init(),
     ),
   ));
