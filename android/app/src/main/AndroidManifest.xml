@@ -9,7 +9,7 @@
     <application
         android:label="estateease"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAr1dn7Gm4qQzKjgqocTqTCya1g8CKp7ZY" />
